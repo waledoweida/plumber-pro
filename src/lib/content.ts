@@ -2,10 +2,10 @@ import { prisma } from "./prisma";
 
 const defaultSettings = {
   id: 1,
-  name: "دار السباكة",
+  name: "شلال بيروت",
   tagline: "سباك الكويت المعتمد",
-  phone: "94021192",
-  whatsapp: "96594021192",
+  phone: "55824247",
+  whatsapp: "96565006904",
   email: "info@plumberkuw.com",
   address: "الكويت - جميع المحافظات",
   hours: "24 ساعة / 7 أيام",

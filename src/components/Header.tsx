@@ -10,21 +10,23 @@ type Pub = {
   texts?: Record<string, string>;
 };
 
-export default function Header() {
+export default function Header({ initialData }: { initialData?: Pub }) {
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState<Pub>({
-    name: "دار السباكة",
-    phone: "94021192",
-    texts: {},
-  });
+  const [data, setData] = useState<Pub>(
+    initialData || {
+      name: "شلال بيروت",
+      phone: "94021192",
+      texts: {},
+    }
+  );
 
   useEffect(() => {
+    if (initialData) return;
     fetch("/api/public/content", { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => setData(d))
       .catch(() => {});
-  }, []);
-
+  }, [initialData]);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {

@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
-import { getSiteSettings } from "@/lib/content";
+import { getSiteSettings, getTexts } from "@/lib/content";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const site = await getSiteSettings();
+  const [site, texts] = await Promise.all([getSiteSettings(), getTexts()]);
   const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Plumber",
@@ -73,7 +73,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
-        <Header />
+        <Header
+          initialData={{
+            name: site.name,
+            phone: site.phone,
+            tagline: site.tagline,
+            texts,
+          }}
+        />
         <main className="flex-1 w-full overflow-x-hidden">{children}</main>
         <Footer />
         <FloatingButtons />

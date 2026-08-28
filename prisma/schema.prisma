@@ -11,10 +11,10 @@ datasource db {
 
 model SiteSettings {
   id          Int    @id @default(1)
-  name        String @default("دار السباكة")
+ name        String @default("شلال بيروت")
   tagline     String @default("سباك الكويت المعتمد")
-  phone       String @default("94021192")
-  whatsapp    String @default("96594021192")
+  phone       String @default("55824247")
+  whatsapp    String @default("96565006904")
   email       String @default("info@plumberkuw.com")
   address     String @default("الكويت - جميع المحافظات")
   hours       String @default("24 ساعة / 7 أيام")
