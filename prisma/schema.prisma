@@ -1,0 +1,108 @@
+generator client {
+  provider      = "prisma-client-js"
+  // native = جهازك | rhel/debian = Netlify / AWS Lambda
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id          Int    @id @default(1)
+  name        String @default("دار السباكة")
+  tagline     String @default("سباك الكويت المعتمد")
+  phone       String @default("94021192")
+  whatsapp    String @default("96594021192")
+  email       String @default("info@plumberkuw.com")
+  address     String @default("الكويت - جميع المحافظات")
+  hours       String @default("24 ساعة / 7 أيام")
+  description String @default("أفضل سباك صحي في الكويت - صيانة، تسليك، كشف تسربات، تركيب. خدمة 24 ساعة.")
+}
+
+model TextContent {
+  id    String @id
+  value String
+}
+
+model Visibility {
+  id      String  @id
+  visible Boolean @default(true)
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  short       String
+  description String
+  icon        String   @default("Wrench")
+  image       String   @default("")
+  features    String   @default("[]")
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Area {
+  id           String  @id @default(cuid())
+  slug         String  @unique
+  title        String
+  description  String
+  excerpt      String  @default("")
+  content      String  @default("")
+  responseTime String  @default("30–60 دقيقة")
+  order        Int     @default(0)
+  published    Boolean @default(true)
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String
+  image       String   @default("")
+  published   Boolean  @default(true)
+  publishedAt DateTime @default(now())
+}
+
+model WhyPoint {
+  id    String @id @default(cuid())
+  text  String
+  order Int    @default(0)
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  area      String   @default("")
+  service   String   @default("")
+  message   String   @default("")
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  area      String   @default("")
+  rating    Int      @default(5)
+  text      String
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String
+  image     String
+  caption   String   @default("")
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}

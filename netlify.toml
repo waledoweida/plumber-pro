@@ -1,0 +1,30 @@
+# Netlify — Next.js App Router
+[build]
+  command = "npx prisma generate && next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Prisma على بيئة Netlify (Linux)
+  PRISMA_CLI_BINARY_TARGETS = "native,rhel-openssl-3.0.x,debian-openssl-3.0.x"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# لا تفهرس لوحة التحكم
+[[headers]]
+  for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/api/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# إعادة توجيه اختيارية لـ www (فعّلها بعد ربط الدومين)
+# [[redirects]]
+#   from = "https://yourdomain.com/*"
+#   to = "https://www.yourdomain.com/:splat"
+#   status = 301
+#   force = true

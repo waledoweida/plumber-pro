@@ -1,0 +1,38 @@
+{
+  "name": "plumber-pro-kuwait",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "db:push": "prisma db push",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "postinstall": "prisma generate",
+    "netlify:build": "prisma generate && next build"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@prisma/client": "^6.1.0",
+    "lucide-react": "^0.468.0",
+    "bcryptjs": "^2.4.3",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.6.0",
+    "@vercel/blob": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.7.0",
+    "tailwindcss": "^3.4.16",
+    "postcss": "^8.4.49",
+    "autoprefixer": "^10.4.20",
+    "prisma": "^6.1.0",
+    "tsx": "^4.19.0",
+    "@netlify/plugin-nextjs": "^5.9.0"
+  }
+}
