@@ -41,7 +41,7 @@ async function uploadCloudinary(buf: Buffer, filename: string, contentType: stri
   if (!cloud || !preset) return null;
 
   const form = new FormData();
-  form.append("file", new Blob([buf], { type: contentType }), filename);
+  form.append("file", new Blob([new Uint8Array(buf)], { type: contentType }), filename);
   form.append("upload_preset", preset);
   form.append("folder", "plumber-pro");
 
