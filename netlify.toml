@@ -6,7 +6,7 @@
 [build.environment]
   NODE_VERSION = "20"
   # Prisma على بيئة Netlify (Linux)
-  PRISMA_CLI_BINARY_TARGETS = "native,rhel-openssl-3.0.x,debian-openssl-3.0.x"
+  PRISMA_CLI_BINARY_TARGETS = "rhel-openssl-3.0.x,debian-openssl-3.0.x"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
