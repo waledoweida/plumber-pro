@@ -3,6 +3,7 @@ import { prisma } from "./prisma";
 const defaultSettings = {
   id: 1,
   name: "شلال بيروت",
+  logoUrl: "",
   tagline: "سباك الكويت المعتمد",
   phone: "55824247",
   whatsapp: "96565006904",
