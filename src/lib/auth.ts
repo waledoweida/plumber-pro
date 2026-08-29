@@ -102,6 +102,7 @@ export function sanitizeSlug(input: string): string {
 
 export const SETTINGS_FIELDS = [
   "name",
+  "logoUrl",
   "tagline",
   "phone",
   "whatsapp",

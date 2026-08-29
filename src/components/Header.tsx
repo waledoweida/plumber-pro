@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Phone, Menu, X } from "lucide-react";
 
 type Pub = {
   name: string;
+  logoUrl?: string;
   phone: string;
   tagline?: string;
   texts?: Record<string, string>;
@@ -48,10 +50,16 @@ export default function Header({ initialData }: { initialData?: Pub }) {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
       <div className="max-w-6xl mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-2">
-        <Link href="/" className="flex items-center gap-2 min-w-0">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-brand-800 text-accent-400 flex items-center justify-center font-bold text-base sm:text-lg shadow-sm">
-            د
-          </div>
+       <Link href="/" className="flex items-center gap-2 min-w-0">
+          {data.logoUrl ? (
+            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl overflow-hidden relative bg-white border border-slate-200">
+              <Image src={data.logoUrl} alt={data.name} fill className="object-contain" />
+            </div>
+          ) : (
+            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-brand-800 text-accent-400 flex items-center justify-center font-bold text-base sm:text-lg shadow-sm">
+              د
+            </div>
+          )}
           <div className="min-w-0">
             <div className="font-bold text-brand-900 leading-tight text-sm sm:text-base truncate max-w-[140px] sm:max-w-none">
               {data.name}

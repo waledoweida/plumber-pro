@@ -345,7 +345,23 @@ export default function AdminPage() {
   if (tab === "settings") {
     panel = (
       <div className="space-y-3">
-        <div className="flex justify-end"><SaveBtn onClick={() => save("/api/admin/settings", settings)} /></div>
+      <div className="flex justify-end"><SaveBtn onClick={() => save("/api/admin/settings", settings)} /></div>
+        <div className="bg-white rounded-2xl border p-4 space-y-3">
+          <label className="text-xs font-semibold text-slate-500 block">شعار الموقع (اللوجو)</label>
+          {settings.logoUrl ? (
+            <div className="flex items-center gap-3">
+              <img src={settings.logoUrl} alt="لوجو" className="w-16 h-16 rounded-xl border object-contain bg-slate-50" />
+              <button
+                type="button"
+                className="text-sm text-red-600 font-semibold"
+                onClick={() => setSettings({ ...settings, logoUrl: "" })}
+              >
+                إزالة الشعار
+              </button>
+            </div>
+          ) : null}
+          <ImgUpload onUrl={(url) => setSettings({ ...settings, logoUrl: url })} />
+        </div>
         <div className="bg-white rounded-2xl border divide-y">
           {SETTINGS_KEYS.map((k) => (
             <div key={k} className="p-4">

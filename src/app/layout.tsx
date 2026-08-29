@@ -76,6 +76,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Header
           initialData={{
             name: site.name,
+            logoUrl: site.logoUrl,
             phone: site.phone,
             tagline: site.tagline,
             texts,
