@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { getSiteSettings, getServices, getTexts } from "@/lib/content";
 
@@ -17,7 +18,13 @@ export default async function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10">
         <div>
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
-            <div className="w-9 h-9 rounded-lg bg-brand-700 text-accent-400 flex items-center justify-center font-bold">د</div>
+            {site.logoUrl ? (
+              <div className="w-9 h-9 rounded-lg overflow-hidden relative bg-white border border-brand-800 shrink-0">
+                <Image src={site.logoUrl} alt={site.name} fill className="object-contain" />
+              </div>
+            ) : (
+              <div className="w-9 h-9 rounded-lg bg-brand-700 text-accent-400 flex items-center justify-center font-bold">د</div>
+            )}
             <span className="font-bold text-white text-lg">{site.name}</span>
           </div>
           <p className="text-sm leading-relaxed text-slate-400">{site.description}</p>
