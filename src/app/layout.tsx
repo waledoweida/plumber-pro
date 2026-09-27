@@ -23,7 +23,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#112544",
+  themeColor: "#1e338a",
   viewportFit: "cover",
 };
 
@@ -113,7 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{ __html: jsonLd }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#f2f5f9] text-slate-900 antialiased pb-[4.5rem] sm:pb-0">
+      <body className="min-h-screen flex flex-col bg-[#f7f9fc] text-slate-900 antialiased pb-[4.5rem] sm:pb-0">
         <Header
           initialData={{
             name: site.name,

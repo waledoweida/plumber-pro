@@ -14,7 +14,7 @@ export default async function EnThankYou() {
       <CheckCircle className="w-16 h-16 text-brand-600 mx-auto mb-4" />
       <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">We&apos;ve received your request</h1>
       <p className="text-slate-600 mb-8">We&apos;ll contact you shortly. For emergencies, call us now:</p>
-      <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 icon-tile-solid text-white font-bold px-8 py-4 rounded-lg">
+      <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 icon-tile-solid text-white font-bold px-8 py-4 rounded-2xl">
         <Phone className="w-5 h-5" /> {site.phone}
       </a>
       <div className="mt-6"><Link href="/en" className="text-brand-700 font-semibold hover:underline">Back to home</Link></div>

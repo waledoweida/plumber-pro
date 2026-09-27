@@ -39,14 +39,14 @@ export default async function ContactPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14 grid lg:grid-cols-[1fr_1.1fr] gap-8 items-start">
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-3">
-            <a href={`tel:${site.phone}`} className="btn-primary text-white rounded-md p-5 flex flex-col items-center gap-2 font-bold text-center">
+            <a href={`tel:${site.phone}`} className="btn-primary text-brand-950 rounded-xl p-5 flex flex-col items-center gap-2 font-bold text-center">
               <Phone className="w-6 h-6" /> {t("page.contactCta", "اتصل الحين")}
             </a>
-            <a href={waLink(site.whatsapp, WA_DEFAULT)} target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-[#0a172c] rounded-md p-5 flex flex-col items-center gap-2 font-bold text-center">
+            <a href={waLink(site.whatsapp, WA_DEFAULT)} target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-[#131f4f] rounded-xl p-5 flex flex-col items-center gap-2 font-bold text-center">
               <MessageCircle className="w-6 h-6" /> {t("home.ctaWhatsapp", "واتساب")}
             </a>
           </div>
-          <div className="bg-white border border-slate-200 rounded-lg divide-y divide-slate-100">
+          <div className="bg-white border border-slate-200 rounded-2xl divide-y divide-slate-100">
             {rows.map((r) => (
               <div key={r.label} className="flex gap-4 items-center p-5">
                 <span className="w-11 h-11 icon-tile flex items-center justify-center shrink-0"><r.icon className="w-5 h-5" /></span>
@@ -58,11 +58,11 @@ export default async function ContactPage() {
             ))}
           </div>
           {areas.length > 0 && (
-            <div className="bg-white border border-slate-200 rounded-lg p-5">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5">
               <h2 className="font-bold text-brand-950 mb-3">المناطق اللي نغطيها</h2>
               <div className="flex flex-wrap gap-2">
                 {areas.map((a) => (
-                  <span key={a.id} className="text-sm bg-brand-50 text-brand-800 px-3 py-1.5">{a.title}</span>
+                  <span key={a.id} className="text-sm bg-brand-50 text-brand-800 px-3 py-1.5 rounded-full">{a.title}</span>
                 ))}
               </div>
             </div>

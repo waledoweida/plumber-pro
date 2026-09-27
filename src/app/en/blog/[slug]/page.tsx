@@ -71,7 +71,7 @@ export default async function EnArticlePage({ params }: Props) {
         <ArrowLeft className="w-4 h-4" /> Blog
       </Link>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={a.image} {...responsive(a.image)} alt={a.title} fetchPriority="high" width={1200} height={675} className="w-full h-auto aspect-[16/9] object-cover rounded-lg mb-6" />
+      <img src={a.image} {...responsive(a.image)} alt={a.title} fetchPriority="high" width={1200} height={675} className="w-full h-auto aspect-[16/9] object-cover rounded-2xl mb-6" />
       <div className="flex items-center gap-3 text-xs text-slate-600">
         <time dateTime={new Date(a.publishedAt).toISOString()}>
           {new Date(a.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
@@ -81,7 +81,7 @@ export default async function EnArticlePage({ params }: Props) {
       </div>
       <h1 className="text-2xl sm:text-3xl font-bold text-brand-900 mt-2 mb-4 leading-snug">{a.title}</h1>
       {headings.length >= 3 && (
-        <nav aria-label="Contents" className="my-6 bg-white border rounded-lg p-5">
+        <nav aria-label="Contents" className="my-6 bg-white border rounded-2xl p-5">
           <p className="font-bold text-slate-900 mb-3 inline-flex items-center gap-2">
             <ListOrdered className="w-4 h-4 text-brand-700" /> Contents
           </p>
@@ -95,7 +95,7 @@ export default async function EnArticlePage({ params }: Props) {
         </nav>
       )}
       <div className="max-w-none text-slate-700 leading-loose text-base sm:text-lg">{renderArticle(a.content)}</div>
-      <div className="mt-10 bg-brand-50 rounded-lg p-6 text-center">
+      <div className="mt-10 bg-brand-50 rounded-2xl p-6 text-center">
         <p className="mb-3 font-medium text-brand-900">Need a plumber now?</p>
         <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-6 py-3 rounded-xl">
           <Phone className="w-5 h-5" />
@@ -107,7 +107,7 @@ export default async function EnArticlePage({ params }: Props) {
           <h2 id="related" className="text-xl font-bold text-brand-900 mb-4">You may also like</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {related.map((r) => (
-              <Link key={r.slug} href={`/en/blog/${r.slug}`} className="bg-white border rounded-lg overflow-hidden hover:shadow-md hover:border-brand-300 transition">
+              <Link key={r.slug} href={`/en/blog/${r.slug}`} className="bg-white border rounded-2xl overflow-hidden hover:shadow-md hover:border-brand-300 transition">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={r.image} {...responsive(r.image)} alt={r.title} loading="lazy" decoding="async" className="w-full aspect-[16/9] object-cover" />
                 <p className="p-3 text-sm font-bold text-slate-900 leading-snug line-clamp-2">{r.title}</p>

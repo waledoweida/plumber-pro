@@ -75,7 +75,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </Link>
       {a.image ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={a.image} {...responsive(a.image)} alt={a.title} fetchPriority="high" width={1200} height={675} className="w-full h-auto aspect-[16/9] object-cover rounded-lg mb-6" />
+        <img src={a.image} {...responsive(a.image)} alt={a.title} fetchPriority="high" width={1200} height={675} className="w-full h-auto aspect-[16/9] object-cover rounded-2xl mb-6" />
       ) : null}
       <div className="flex items-center gap-3 text-xs text-slate-600">
         <time dateTime={new Date(a.publishedAt).toISOString()}>
@@ -86,7 +86,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </div>
       <h1 className="text-2xl sm:text-3xl font-bold text-brand-900 mt-2 mb-4 leading-snug">{a.title}</h1>
       {headings.length >= 3 && (
-        <nav aria-label="محتويات المقال" className="my-6 bg-white border rounded-lg p-5">
+        <nav aria-label="محتويات المقال" className="my-6 bg-white border rounded-2xl p-5">
           <p className="font-bold text-slate-900 mb-3 inline-flex items-center gap-2">
             <ListOrdered className="w-4 h-4 text-brand-700" /> محتويات المقال
           </p>
@@ -109,13 +109,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               return (
                 <a key={i} href={m.url} target="_blank" rel="noopener noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.url} alt={a.title} loading="lazy" className="w-full aspect-[4/3] object-cover rounded-lg" />
+                  <img src={m.url} alt={a.title} loading="lazy" className="w-full aspect-[4/3] object-cover rounded-2xl" />
                 </a>
               );
             }
             if (m.type === "video") {
               return (
-                <video key={i} src={m.url} controls preload="metadata" playsInline className="w-full aspect-video rounded-lg bg-black" />
+                <video key={i} src={m.url} controls preload="metadata" playsInline className="w-full aspect-video rounded-2xl bg-black" />
               );
             }
             const id = youtubeId(m.url);
@@ -127,13 +127,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 loading="lazy"
                 allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full aspect-video rounded-lg"
+                className="w-full aspect-video rounded-2xl"
               />
             ) : null;
           })}
         </div>
       )}
-      <div className="mt-10 bg-brand-50 rounded-lg p-6 text-center">
+      <div className="mt-10 bg-brand-50 rounded-2xl p-6 text-center">
         <p className="mb-3 font-medium text-brand-900">المشكلة عندك الحين؟ كلمنا ونمرّك</p>
         <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-6 py-3 rounded-xl">
           <Phone className="w-5 h-5" />
@@ -145,7 +145,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <h2 id="related" className="text-xl font-bold text-brand-900 mb-4">مواضيع ثانية</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {related.map((r) => (
-              <Link key={r.id} href={`/blog/${r.slug}`} className="bg-white border rounded-lg overflow-hidden hover:shadow-md hover:border-brand-300 transition">
+              <Link key={r.id} href={`/blog/${r.slug}`} className="bg-white border rounded-2xl overflow-hidden hover:shadow-md hover:border-brand-300 transition">
                 {r.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={r.image} {...responsive(r.image)} alt={r.title} loading="lazy" decoding="async" className="w-full aspect-[16/9] object-cover" />

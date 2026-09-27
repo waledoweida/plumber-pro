@@ -70,7 +70,7 @@ export default async function HomePage() {
           <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-20 sm:pt-16 sm:pb-28">
             <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 bg-accent-500/15 border border-accent-400/40 px-3 py-1.5 text-xs sm:text-sm text-accent-200 mb-5">
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur rounded-full px-4 py-1.5 text-xs sm:text-sm text-accent-200 mb-5">
                   <span className="relative w-2 h-2 rounded-full bg-accent-400 ripple" />
                   {t("home.heroBadge", "شغّالين 24 ساعة، حتى الجمعة والعطل")}
                 </div>
@@ -84,22 +84,22 @@ export default async function HomePage() {
                   {heroLines.map((l, i) => <p key={i}>{l}</p>)}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 btn-primary text-white font-bold px-7 py-4 rounded-md text-lg">
+                  <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 btn-primary text-brand-950 font-bold px-7 py-4 rounded-xl text-lg">
                     <Phone className="w-5 h-5" /> {t("home.btnCall", "اتصل علينا")} <span dir="ltr">{site.phone}</span>
                   </a>
-                  <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-[#25D366] text-white font-bold px-7 py-4 rounded-md transition">
+                  <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-[#25D366] text-white font-bold px-7 py-4 rounded-xl transition">
                     <MessageCircle className="w-5 h-5 text-[#25D366]" /> {t("home.btnWhatsapp", "كلمنا واتساب")}
                   </a>
                 </div>
               </div>
 
               {/* بطاقة: شنو المشكلة؟ */}
-              <div className="bg-white text-slate-900 rounded-lg shadow-2xl shadow-black/30 overflow-hidden">
-                <div className="bg-accent-500 text-white px-5 py-4 flex items-center gap-3">
+              <div className="bg-white text-slate-900 rounded-2xl shadow-2xl shadow-black/30 overflow-hidden">
+                <div className="bg-gradient-to-l from-brand-700 to-brand-900 text-white px-5 py-4 flex items-center gap-3">
                   <Wrench className="w-6 h-6" />
                   <div>
                     <h2 className="font-bold text-lg leading-tight">شنو المشكلة عندك؟</h2>
-                    <p className="text-xs text-white/90">اختار وشوف شلون نحلها</p>
+                    <p className="text-xs text-brand-100">اختار وشوف شلون نحلها</p>
                   </div>
                 </div>
                 <ul className="divide-y divide-slate-100">
@@ -109,7 +109,7 @@ export default async function HomePage() {
                     return (
                       <li key={p.slug}>
                         <Link href={`/services/${s.slug}`} className="flex items-center gap-3 px-5 py-3.5 hover:bg-accent-50 transition group">
-                          <span className="w-9 h-9 icon-tile flex items-center justify-center shrink-0"><Icon className="w-4 h-4" /></span>
+                          <span className="w-9 h-9 rounded-lg icon-tile flex items-center justify-center shrink-0"><Icon className="w-4 h-4" /></span>
                           <span className="flex-1">
                             <span className="block font-semibold text-sm text-brand-950">{p.text}</span>
                             <span className="block text-xs text-slate-500">{s.title}</span>
@@ -128,7 +128,7 @@ export default async function HomePage() {
 
       {/* ===== ليش تثق فينا (حقائق) ===== */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 -mt-6 sm:-mt-10 relative z-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 bg-white shadow-card rounded-lg overflow-hidden">
+        <div className="grid grid-cols-2 lg:grid-cols-4 bg-white shadow-card rounded-2xl overflow-hidden">
           {[
             { icon: Clock3, v: "24/7", l: "مفتوحين ليل ونهار" },
             { icon: ShieldCheck, v: "ضمان", l: "مكتوب على التركيب" },
@@ -164,9 +164,9 @@ export default async function HomePage() {
               {services.map((s, i) => {
                 const Icon = icons[s.icon] || Wrench;
                 return (
-                  <Link key={s.id} href={`/services/${s.slug}`} className="service-card bg-white border border-slate-200 rounded-lg p-6 flex flex-col group overflow-hidden">
+                  <Link key={s.id} href={`/services/${s.slug}`} className="service-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col group overflow-hidden">
                     <div className="flex items-start justify-between mb-5">
-                      <span className="w-12 h-12 icon-tile-solid flex items-center justify-center"><Icon className="w-6 h-6" /></span>
+                      <span className="w-12 h-12 rounded-xl icon-tile-solid flex items-center justify-center"><Icon className="w-6 h-6" /></span>
                       <span className="text-4xl font-bold text-slate-100 group-hover:text-accent-100 transition" dir="ltr">
                         {String(i + 1).padStart(2, "0")}
                       </span>
@@ -197,9 +197,9 @@ export default async function HomePage() {
                 { icon: BadgeCheck, title: "نصلح ونعطيك ضمان", desc: "نخلص الشغل وننظف المكان، ونعطيك ضمان مكتوب" },
               ].map((step, i) => (
                 <li key={i} className="relative text-center bg-white md:bg-transparent">
-                  <div className="relative mx-auto w-14 h-14 bg-brand-950 text-white flex items-center justify-center mb-4 z-10">
+                  <div className="relative mx-auto w-14 h-14 rounded-2xl icon-tile-solid text-white flex items-center justify-center mb-4 z-10">
                     <step.icon className="w-6 h-6" />
-                    <span className="absolute -top-2 -start-2 w-6 h-6 bg-accent-500 text-white text-xs font-bold flex items-center justify-center">{i + 1}</span>
+                    <span className="absolute -top-2 -start-2 w-6 h-6 rounded-full bg-accent-400 text-brand-950 text-xs ring-2 ring-white font-bold flex items-center justify-center">{i + 1}</span>
                   </div>
                   <h3 className="font-bold text-brand-950 text-lg mb-1">{step.title}</h3>
                   <p className="text-slate-600 text-sm max-w-xs mx-auto leading-relaxed">{step.desc}</p>
@@ -214,7 +214,7 @@ export default async function HomePage() {
       {vis.showWhy !== false && (
         <section className="py-14 sm:py-20 section-defer">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.4fr] gap-6 lg:gap-10 items-stretch">
-            <div className="hero-dark text-white rounded-lg p-7 sm:p-10 relative overflow-hidden flex flex-col">
+            <div className="hero-dark text-white rounded-2xl p-7 sm:p-10 relative overflow-hidden flex flex-col">
               <div className="absolute inset-0 dot-grid pointer-events-none" />
               <span className="relative eyebrow eyebrow-light">ليش إحنا</span>
               <h2 className="relative text-2xl sm:text-3xl font-bold mt-3 mb-4 leading-snug">
@@ -223,14 +223,14 @@ export default async function HomePage() {
               <p className="relative text-brand-100 leading-relaxed mb-8">
                 {t("home.whyDesc", "خبرة بالسباكة وأمانة بالشغل وضمان تقدر ترجع له.")}
               </p>
-              <Link href="#lead" className="relative mt-auto self-start inline-flex items-center gap-2 btn-primary text-white font-bold px-6 py-3 rounded-md">
+              <Link href="#lead" className="relative mt-auto self-start inline-flex items-center gap-2 btn-primary text-brand-950 font-bold px-6 py-3 rounded-xl">
                 {t("home.whyBtn", "اطلب سباك")} <ArrowLeft className="w-4 h-4" />
               </Link>
             </div>
             <ul className="grid sm:grid-cols-2 gap-3 sm:gap-4">
               {whyItems.map((text, i) => (
-                <li key={i} className="bg-white border border-slate-200 rounded-lg p-5 flex items-start gap-4">
-                  <span className="w-9 h-9 bg-accent-50 text-accent-600 font-bold flex items-center justify-center shrink-0" dir="ltr">
+                <li key={i} className="bg-white border border-slate-200 rounded-2xl p-5 flex items-start gap-4">
+                  <span className="w-9 h-9 rounded-xl bg-accent-50 text-accent-700 font-bold flex items-center justify-center shrink-0" dir="ltr">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <p className="font-semibold text-brand-950 leading-relaxed pt-1">{text}</p>
@@ -248,7 +248,7 @@ export default async function HomePage() {
             <SectionHeading eyebrow="من الميدان" title={t("home.galleryTitle", "صور من شغلنا")} />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {gallery.slice(0, 6).map((g) => (
-                <figure key={g.id} className="group relative overflow-hidden rounded-lg bg-slate-100 aspect-[4/3]">
+                <figure key={g.id} className="group relative overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
                   <img loading="lazy" decoding="async" src={g.image} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                   <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/90 to-transparent text-white p-4 pt-10">
                     <span className="block font-bold">{g.title}</span>
@@ -268,7 +268,7 @@ export default async function HomePage() {
             <SectionHeading eyebrow="آراء" title={t("home.reviewsTitle", "كلام زباينا")} />
             <div className="grid md:grid-cols-3 gap-4 sm:gap-5">
               {reviews.slice(0, 6).map((r) => (
-                <figure key={r.id} className="bg-white border border-slate-200 border-t-4 border-t-brand-900 rounded-lg p-6 flex flex-col">
+                <figure key={r.id} className="bg-white border border-slate-200  rounded-2xl p-6 flex flex-col">
                   <div className="flex gap-0.5 mb-3">
                     {Array.from({ length: Math.min(5, Math.max(1, r.rating)) }).map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-accent-400 text-accent-400" />
@@ -276,7 +276,7 @@ export default async function HomePage() {
                   </div>
                   <blockquote className="text-slate-700 leading-relaxed mb-5 flex-1">«{r.text}»</blockquote>
                   <figcaption className="flex items-center gap-3 text-sm">
-                    <span className="w-9 h-9 bg-brand-100 text-brand-900 font-bold flex items-center justify-center">{r.name.charAt(0)}</span>
+                    <span className="w-9 h-9 rounded-full bg-brand-100 text-brand-900 font-bold flex items-center justify-center">{r.name.charAt(0)}</span>
                     <span>
                       <span className="block font-bold text-brand-950">{r.name}</span>
                       {r.area && <span className="block text-xs text-slate-500">{r.area}</span>}
@@ -291,17 +291,17 @@ export default async function HomePage() {
 
       {/* ===== شريط الاتصال ===== */}
       {vis.showCta !== false && (
-        <section className="bg-accent-500 text-white section-defer">
+        <section className="bg-gold-gradient text-brand-950 section-defer">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid lg:grid-cols-[1.5fr_1fr] gap-6 items-center">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-2">{t("home.ctaTitle", "الماي ما ينتظر… كلمنا الحين")}</h2>
-              <p className="text-white/90 leading-relaxed">{t("home.ctaDesc", "التهريب الصغير اليوم يصير رطوبة وتكسير باجر. اتصل وخل الفني يشوفها.")}</p>
+              <p className="text-brand-900/80 leading-relaxed">{t("home.ctaDesc", "التهريب الصغير اليوم يصير رطوبة وتكسير باجر. اتصل وخل الفني يشوفها.")}</p>
             </div>
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
-              <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 bg-brand-950 text-white font-bold px-6 py-4 rounded-md text-lg">
+              <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 bg-brand-950 text-white font-bold px-6 py-4 rounded-xl text-lg">
                 <Phone className="w-5 h-5" /> <span dir="ltr">{site.phone}</span>
               </a>
-              <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-brand-950 font-bold px-6 py-3.5 rounded-md">
+              <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-brand-950 font-bold px-6 py-3.5 rounded-xl">
                 <MessageCircle className="w-5 h-5 text-[#128C7E]" /> {t("home.ctaWhatsapp", "واتساب")}
               </a>
             </div>
@@ -343,7 +343,7 @@ export default async function HomePage() {
             />
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {areas.map((a) => (
-                <Link key={a.id} href={`/areas/${a.slug}`} className="card-hover bg-white border border-slate-200 rounded-lg p-4 sm:p-5 flex items-center gap-3">
+                <Link key={a.id} href={`/areas/${a.slug}`} className="card-hover bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-accent-500 shrink-0" />
                   <span className="min-w-0">
                     <span className="block font-bold text-brand-950">سباك {a.title}</span>
@@ -368,7 +368,7 @@ export default async function HomePage() {
             </div>
             <div className="grid md:grid-cols-3 gap-5">
               {articles.map((a) => (
-                <Link key={a.id} href={`/blog/${a.slug}`} className="card-hover group bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col">
+                <Link key={a.id} href={`/blog/${a.slug}`} className="card-hover group bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col">
                   {a.image && (
                     <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
                       <img loading="lazy" decoding="async" src={a.image} {...responsive(a.image)} alt={a.title} className="w-full h-full object-cover" />

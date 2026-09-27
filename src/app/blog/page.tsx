@@ -29,7 +29,7 @@ export default async function BlogPage() {
       subtitle="مواضيع يكتبها فنيينا من الشغل اليومي: شلون تكتشف المشكلة بدري، شنو تقدر تسوي بروحك، ومتى تحتاج سباك"
       crumbs={[{ href: "/", label: "الرئيسية" }]}
     />
-    <div className="bg-[#f2f5f9]">
+    <div className="bg-[#f7f9fc]">
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       {articles.length === 0 ? (
         <p className="text-center text-slate-500">بنضيف مواضيع قريب.</p>
@@ -39,7 +39,7 @@ export default async function BlogPage() {
             <Link
               key={a.id}
               href={`/blog/${a.slug}`}
-              className="service-card bg-white rounded-lg border border-slate-200/70 overflow-hidden"
+              className="service-card bg-white rounded-2xl border border-slate-200/70 overflow-hidden"
             >
               {a.image ? (
                 // eslint-disable-next-line @next/next/no-img-element

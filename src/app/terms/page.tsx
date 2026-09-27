@@ -17,7 +17,7 @@ export default async function TermsPage() {
     <>
       <PageHero title="الشروط والأحكام" crumbs={[{ href: "/", label: "الرئيسية" }]} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <div className="bg-white border border-slate-200 rounded-lg p-6 sm:p-8 text-slate-700 leading-loose space-y-3">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 text-slate-700 leading-loose space-y-3">
           <p>لما تستخدم موقع <strong>{site.name}</strong> أو تطلب منا شغل سباكة، معناها إنك موافق على هالشروط.</p>
           <H>السعر</H>
           <p>الفني يفحص المشكلة ويقولك السعر، وما نبدي الشغل إلا بعد موافقتك. إذا طلع شغل زيادة أثناء التصليح نرجع لك قبل لا نسويه.</p>

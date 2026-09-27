@@ -17,7 +17,7 @@ export default async function PrivacyPage() {
     <>
       <PageHero title="سياسة الخصوصية" crumbs={[{ href: "/", label: "الرئيسية" }]} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <div className="bg-white border border-slate-200 rounded-lg p-6 sm:p-8 text-slate-700 leading-loose space-y-3">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 text-slate-700 leading-loose space-y-3">
           <p>خصوصيتك تهمنا في <strong>{site.name}</strong>. هني نشرح شنو البيانات اللي ناخذها لما تطلب سباك من الموقع، وشنو نسوي فيها.</p>
           <H>شنو ناخذ منك؟</H>
           <ul className="list-disc ps-5 space-y-1">

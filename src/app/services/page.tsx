@@ -48,14 +48,14 @@ export default async function ServicesPage() {
             <Link
               key={s.id}
               href={`/services/${s.slug}`}
-              className="service-card group bg-white border border-slate-200 rounded-lg overflow-hidden grid sm:grid-cols-[auto_1fr_auto] items-center gap-5 p-5 sm:p-6"
+              className="service-card group bg-white border border-slate-200 rounded-2xl overflow-hidden grid sm:grid-cols-[auto_1fr_auto] items-center gap-5 p-5 sm:p-6"
             >
               {s.image ? (
-                <img loading="lazy" decoding="async" src={s.image} alt={s.title} className="w-full sm:w-40 aspect-[16/10] object-cover rounded-md" />
+                <img loading="lazy" decoding="async" src={s.image} alt={s.title} className="w-full sm:w-40 aspect-[16/10] object-cover rounded-xl" />
               ) : (
                 <span className="w-14 h-14 icon-tile-solid flex items-center justify-center relative">
                   <Icon className="w-7 h-7" />
-                  <span className="absolute -top-2 -start-2 text-[11px] font-bold bg-accent-500 text-white px-1.5" dir="ltr">
+                  <span className="absolute -top-2 -start-2 text-[11px] font-bold bg-accent-400 text-brand-950 px-1.5 rounded-md" dir="ltr">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </span>
@@ -66,7 +66,7 @@ export default async function ServicesPage() {
                 {feats.length > 0 && (
                   <ul className="flex flex-wrap gap-2">
                     {feats.slice(0, 4).map((f) => (
-                      <li key={f} className="text-xs bg-brand-50 text-brand-800 px-2.5 py-1">{f}</li>
+                      <li key={f} className="text-xs bg-brand-50 text-brand-800 px-2.5 py-1 rounded-full">{f}</li>
                     ))}
                   </ul>
                 )}
@@ -78,9 +78,9 @@ export default async function ServicesPage() {
           );
         })}
 
-        <div className="bg-brand-950 text-white rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+        <div className="bg-brand-950 text-white rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
           <p className="font-bold text-lg text-center sm:text-start">مو لاقي مشكلتك بالقائمة؟ كلمنا ونقولك إذا نقدر نساعدك.</p>
-          <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 btn-primary text-white font-bold px-6 py-3 rounded-md shrink-0">
+          <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 btn-primary text-brand-950 font-bold px-6 py-3 rounded-xl shrink-0">
             <Phone className="w-4 h-4" /> <span dir="ltr">{site.phone}</span>
           </a>
         </div>

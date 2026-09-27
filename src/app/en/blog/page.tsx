@@ -30,14 +30,14 @@ export default async function EnBlogPage() {
         subtitle="Written by our technicians from everyday jobs: spot problems early, fix what's safe yourself, know when to call"
         crumbs={[{ href: "/en", label: "Home" }]}
       />
-      <div className="bg-[#f2f5f9]">
+      <div className="bg-[#f7f9fc]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
           {articles.length === 0 ? (
             <p className="text-center text-slate-500">No articles yet.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {articles.map((a) => (
-                <Link key={a.slug} href={`/en/blog/${a.slug}`} className="service-card bg-white rounded-lg border border-slate-200/70 overflow-hidden">
+                <Link key={a.slug} href={`/en/blog/${a.slug}`} className="service-card bg-white rounded-2xl border border-slate-200/70 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy" decoding="async" src={a.image} {...responsive(a.image)} alt={a.title} className="w-full aspect-[16/9] object-cover" />
                   <div className="p-5">

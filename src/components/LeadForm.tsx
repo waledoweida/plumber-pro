@@ -57,7 +57,7 @@ export default function LeadForm({ areas = [], services = [], title, compact, la
   return (
     <form
       onSubmit={submit}
-      className={`bg-white rounded-lg border-t-4 border-accent-500 shadow-card ${compact ? "p-4" : "p-5 sm:p-7"} space-y-3`}
+      className={`bg-white rounded-2xl border-t-4 border-accent-500 shadow-card ${compact ? "p-4" : "p-5 sm:p-7"} space-y-3`}
     >
       <h2 className="font-bold text-brand-950 text-lg">{title || T.formTitle}</h2>
       <p className="text-xs text-slate-600 -mt-1 pb-1">{T.formSub}</p>
@@ -125,11 +125,11 @@ export default function LeadForm({ areas = [], services = [], title, compact, la
         tabIndex={-1}
         autoComplete="off"
       />
-      {err && <p className="text-sm text-red-600 bg-red-50 rounded-md px-3 py-2">{err}</p>}
+      {err && <p className="text-sm text-red-600 bg-red-50 rounded-xl px-3 py-2">{err}</p>}
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex items-center justify-center gap-2 btn-primary text-white font-bold py-3.5 rounded-md disabled:opacity-60 min-h-[52px]"
+        className="w-full flex items-center justify-center gap-2 btn-primary text-brand-950 font-bold py-3.5 rounded-xl disabled:opacity-60 min-h-[52px]"
       >
         <Send className="w-4 h-4" />
         {loading ? T.fSending : T.fSend}
