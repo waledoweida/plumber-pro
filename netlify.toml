@@ -1,13 +1,13 @@
 # Netlify — Next.js App Router
 [build]
-  # db push يضيف الأعمدة/الجداول الجديدة لقاعدة البيانات قبل البناء.
-  # بدون --accept-data-loss: لو فيه تغيير هيمسح بيانات، البناء يفشل بدل ما يمسح.
+  # db-sync يضيف الجداول/الأعمدة الجديدة لقاعدة البيانات قبل البناء — وما يحذف أي شي أبدًا
+  # (أي تغيير يمسح بيانات يتخطّاه ويكتبه بالسجل).
   # sync-content: ينشر المقالات ويحدّث النصوص الافتراضية للهجة الكويتية (الإنتاج فقط)
-  command = "npx prisma db push --skip-generate && npx prisma generate && node scripts/sync-content.mjs && next build"
+  command = "npx prisma generate && node scripts/db-sync.mjs && node scripts/sync-content.mjs && next build"
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
   # Prisma على بيئة Netlify (Linux)
   PRISMA_CLI_BINARY_TARGETS = "rhel-openssl-3.0.x,debian-openssl-3.0.x"
   NPM_FLAGS = "--include=dev"
