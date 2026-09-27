@@ -1,7 +1,7 @@
 generator client {
   provider      = "prisma-client-js"
   // native = جهازك | rhel/debian = Netlify / AWS Lambda
-  binaryTargets = [ "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -13,6 +13,7 @@ model SiteSettings {
   id          Int    @id @default(1)
   name        String @default("شلال بيروت")
   logoUrl     String @default("")
+  faviconUrl  String @default("") // أيقونة الموقع (فافيكون) — لو فاضية بتتولد أيقونة تلقائيًا
   tagline     String @default("سباك الكويت المعتمد")
   phone       String @default("55824247")
   whatsapp    String @default("96565006904")
@@ -66,6 +67,8 @@ model Article {
   excerpt     String
   content     String
   image       String   @default("")
+  // صور/فيديوهات إضافية: JSON [{ type: "image" | "video" | "youtube", url }]
+  media       String   @default("[]")
   published   Boolean  @default(true)
   publishedAt DateTime @default(now())
 }
@@ -105,5 +108,34 @@ model GalleryItem {
   caption   String   @default("")
   published Boolean  @default(true)
   order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+model RateLimit {
+  id      String   @id
+  count   Int      @default(1)
+  resetAt DateTime
+}
+// إحصائيات الزيارات والتواصل (بدون كوكيز)
+model Event {
+  id        String   @id @default(cuid())
+  type      String // view | whatsapp | phone
+  path      String
+  visitor   String // بصمة يومية مشفّرة (IP + المتصفح + اليوم) — لا تكشف هوية الزائر
+  referrer  String   @default("")
+  utm       String   @default("") // مصدر الحملة (utm_source / google-ads)
+  device    String   @default("")
+  os        String   @default("")
+  country   String   @default("")
+  city      String   @default("")
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([type, createdAt])
+  @@index([visitor, type, path])
+}
+
+// علامات مزامنة المحتوى التلقائية (مقال/منطقة اتضافت مرة) — علشان لو حذفتها من لوحة التحكم ما ترجع
+model SyncMarker {
+  id        String   @id
   createdAt DateTime @default(now())
 }

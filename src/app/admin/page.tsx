@@ -2,10 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import {
-  Lock, Settings, Type, Eye, Wrench, ListChecks, Save, LogOut,
+  Lock, Settings, Type, Eye, EyeOff, Wrench, ListChecks, Save, LogOut,
   LayoutDashboard, Plus, Trash2, MapPin, Menu, X, Check, MessageSquare,
-  Star, Image as ImageIcon, FileText, Inbox,
+  Star, Image as ImageIcon, FileText, Inbox, Video, Youtube,
 } from "lucide-react";
+import { parseMedia, youtubeId, type MediaItem } from "@/lib/media";
+import Stats from "./Stats";
+import { BRAND } from "@/lib/brand";
 
 type Tab =
   | "dash" | "leads" | "settings" | "texts" | "visibility"
@@ -16,24 +19,45 @@ const TEXT_LABELS: Record<string, string> = {
   "home.heroTitle": "عنوان الهيرو",
   "home.heroSubtitle": "عنوان فرعي",
   "home.heroDesc": "وصف الهيرو",
+  "home.stat1Value": "إحصائية 1 - الرقم",
+  "home.stat1Label": "إحصائية 1 - التسمية",
+  "home.stat2Value": "إحصائية 2 - الرقم",
+  "home.stat2Label": "إحصائية 2 - التسمية",
+  "home.stat3Value": "إحصائية 3 - الرقم",
+  "home.stat3Label": "إحصائية 3 - التسمية",
+  "home.stat4Value": "إحصائية 4 - الرقم",
+  "home.stat4Label": "إحصائية 4 - التسمية",
+  "home.howTitle": "عنوان خطوات الحجز",
+  "home.howSubtitle": "وصف خطوات الحجز",
+  "home.howStep1Title": "خطوة 1 - عنوان",
+  "home.howStep1Desc": "خطوة 1 - وصف",
+  "home.howStep2Title": "خطوة 2 - عنوان",
+  "home.howStep2Desc": "خطوة 2 - وصف",
+  "home.howStep3Title": "خطوة 3 - عنوان",
+  "home.howStep3Desc": "خطوة 3 - وصف",
+  "home.whyHeading": "عنوان لماذا نحن",
+  "home.whyBody": "وصف لماذا نحن",
+  "home.ratingValue": "رقم التقييم",
+  "home.ctaTitle": "عنوان بانر الخصم",
+  "home.ctaDesc": "وصف بانر الخصم",
+  "home.ctaButton": "زر بانر الخصم",
+  "home.ctaWhatsapp": "واتساب CTA",
+  "home.servicesTitle": "عنوان قسم الخدمات",
+  "home.servicesSubtitle": "وصف قسم الخدمات",
+  "home.servicesMore": "رابط تفاصيل",
+  "home.reviewsTitle": "عنوان آراء العملاء",
+  "home.reviewsSubtitle": "وصف آراء العملاء",
   "home.btnCall": "زر اتصال",
   "home.btnWhatsapp": "زر واتساب",
   "home.formTitle": "عنوان نموذج الطلب",
-  "home.servicesTitle": "عنوان الخدمات",
-  "home.servicesSubtitle": "وصف الخدمات",
-  "home.servicesMore": "رابط تفاصيل",
-  "home.reviewsTitle": "عنوان الآراء",
   "home.galleryTitle": "عنوان المعرض",
-  "home.whyTitle": "عنوان لماذا نحن",
-  "home.whyDesc": "وصف لماذا نحن",
+  "home.whyTitle": "عنوان لماذا (بديل)",
+  "home.whyDesc": "وصف لماذا (بديل)",
   "home.whyBtn": "زر اطلب خدمة",
   "home.areasEyebrow": "شريط المناطق",
   "home.areasTitle": "عنوان المناطق",
   "home.areasSubtitle": "وصف المناطق",
   "home.blogTitle": "عنوان المدونة في الرئيسية",
-  "home.ctaTitle": "عنوان CTA",
-  "home.ctaDesc": "وصف CTA",
-  "home.ctaWhatsapp": "واتساب CTA",
   "nav.home": "قائمة: الرئيسية",
   "nav.services": "قائمة: الخدمات",
   "nav.about": "قائمة: من نحن",
@@ -51,22 +75,20 @@ const TEXT_LABELS: Record<string, string> = {
   "page.contactCta": "طلب فوري",
   "page.blogTitle": "عنوان المدونة",
   "page.backToServices": "عودة للخدمات",
-  "label.phone": "تسمية هاتف",
-  "label.email": "تسمية بريد",
-  "label.address": "تسمية عنوان",
-  "label.hours": "تسمية وقت",
 };
 
 const VIS_LABELS: Record<string, string> = {
   showHero: "الهيرو",
   showLeadForm: "نموذج الطلب",
   showServices: "الخدمات",
+  showHowItWorks: "خطوات الحجز",
   showReviews: "آراء العملاء",
   showGallery: "معرض الأعمال",
   showWhy: "لماذا تختارنا",
   showAreas: "المناطق",
+  showArticles: "المقالات في الرئيسية",
   showBlog: "المدونة في الرئيسية",
-  showCta: "الدعوة للإجراء",
+  showCta: "الدعوة للإجراء / الخصم",
   showFloating: "أزرار عائمة",
 };
 
@@ -197,6 +219,58 @@ export default function AdminPage() {
     }
   };
 
+  // رفع صور/فيديوهات المقال. الفيديو (والصور الأكبر من 4 ميجا) يترفع مباشرة لـ Cloudinary
+  // من المتصفح، لأن Netlify ما يقبلش ملفات كبيرة عبر السيرفر.
+  const uploadDirect = async (file: File): Promise<string | null> => {
+    const cfg = await fetch("/api/admin/upload").then((r) => r.json()).catch(() => null);
+    const c = cfg?.cloudinary;
+    if (!c) {
+      setMsg("رفع الفيديو يحتاج إعداد Cloudinary (CLOUDINARY_CLOUD_NAME + CLOUDINARY_UPLOAD_PRESET). ممكن تلصق رابط يوتيوب بدلًا منه.");
+      return null;
+    }
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("upload_preset", c.preset);
+    fd.append("folder", BRAND.uploadFolder);
+    const r = await fetch(`https://api.cloudinary.com/v1_1/${c.cloud}/auto/upload`, { method: "POST", body: fd });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.secure_url) {
+      setMsg(d?.error?.message || "فشل رفع الملف");
+      return null;
+    }
+    return d.secure_url;
+  };
+
+  const uploadArticleMedia = async (files: File[]) => {
+    setUploading(true);
+    let done = 0;
+    try {
+      for (const file of files) {
+        const isVideo = file.type.startsWith("video/");
+        let url: string | null = null;
+        if (isVideo || file.size > 4 * 1024 * 1024) {
+          url = await uploadDirect(file);
+        } else {
+          const fd = new FormData();
+          fd.append("file", file);
+          const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
+          const d = await r.json().catch(() => ({}));
+          if (r.ok && d.url) url = d.url;
+          else setMsg(d.error || "فشل الرفع");
+        }
+        if (!url) continue;
+        const item: MediaItem = { type: isVideo ? "video" : "image", url };
+        setEditArticle((prev: any) => (prev ? { ...prev, media: [...(prev.media || []), item] } : prev));
+        done++;
+      }
+      if (done) setMsg(`تم رفع ${done} ملف`);
+    } catch {
+      setMsg("فشل الاتصال");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const tabs: { id: Tab; label: string; short: string; icon: any }[] = [
     { id: "dash", label: "نظرة عامة", short: "عامة", icon: LayoutDashboard },
     { id: "leads", label: "طلبات العملاء", short: "طلبات", icon: Inbox },
@@ -274,6 +348,8 @@ export default function AdminPage() {
 
   if (tab === "dash") {
     panel = (
+      <div className="space-y-6">
+      <Stats />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {[
           { n: leads.filter((l) => l.status === "new").length, l: "طلب جديد" },
@@ -290,12 +366,27 @@ export default function AdminPage() {
           عرض الموقع ↗
         </a>
       </div>
+      </div>
     );
   }
 
   if (tab === "leads") {
     panel = (
       <div className="space-y-2">
+        <div className="bg-brand-50 border border-brand-200 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 text-sm">
+          <span className="text-brand-900">🔔 أي طلب جديد يوصلك تنبيه بالإيميل (لو مضبوط في Netlify)</span>
+          <button
+            type="button"
+            onClick={async () => {
+              setMsg("جاري إرسال تنبيه تجريبي…");
+              const d = await fetch("/api/admin/notify-test", { method: "POST" }).then((r) => r.json()).catch(() => null);
+              setMsg(d?.message || "تعذّر الإرسال");
+            }}
+            className="border border-brand-300 bg-white text-brand-800 font-bold px-4 py-2 rounded-xl"
+          >
+            جرّب التنبيه
+          </button>
+        </div>
         {leads.length === 0 && <p className="text-slate-400 text-center py-8">لا طلبات بعد</p>}
         {leads.map((l) => (
           <div key={l.id} className="bg-white rounded-2xl border p-4 space-y-1">
@@ -345,7 +436,7 @@ export default function AdminPage() {
   if (tab === "settings") {
     panel = (
       <div className="space-y-3">
-      <div className="flex justify-end"><SaveBtn onClick={() => save("/api/admin/settings", settings)} /></div>
+        <div className="flex justify-end"><SaveBtn onClick={() => save("/api/admin/settings", settings)} /></div>
         <div className="bg-white rounded-2xl border p-4 space-y-3">
           <label className="text-xs font-semibold text-slate-500 block">شعار الموقع (اللوجو)</label>
           {settings.logoUrl ? (
@@ -361,6 +452,37 @@ export default function AdminPage() {
             </div>
           ) : null}
           <ImgUpload onUrl={(url) => setSettings({ ...settings, logoUrl: url })} />
+        </div>
+        <div className="bg-white rounded-2xl border p-4 space-y-3">
+          <label className="text-xs font-semibold text-slate-500 block">أيقونة الموقع (فافيكون)</label>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            بتظهر في تبويب المتصفح وجنب اسم موقعك في نتائج بحث جوجل. استخدم صورة <b>مربعة</b> (يفضل 512×512 PNG)
+            ورمز بسيط وواضح. لو ما رفعتش صورة، بتظهر أيقونة تلقائية بلون الموقع.
+          </p>
+          <div className="flex items-center gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={settings.faviconUrl || "/icon"}
+              alt="الأيقونة الحالية"
+              className="w-16 h-16 rounded-xl border object-contain bg-white"
+            />
+            <div className="flex items-center gap-2 bg-slate-100 rounded-lg px-2 py-1.5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={settings.faviconUrl || "/icon"} alt="" className="w-4 h-4 object-contain" />
+              <span className="text-xs text-slate-700 truncate max-w-[140px]">{settings.name || "الموقع"}</span>
+            </div>
+            {settings.faviconUrl ? (
+              <button
+                type="button"
+                className="text-sm text-red-600 font-semibold"
+                onClick={() => setSettings({ ...settings, faviconUrl: "" })}
+              >
+                رجوع للأيقونة التلقائية
+              </button>
+            ) : null}
+          </div>
+          <ImgUpload onUrl={(url) => setSettings({ ...settings, faviconUrl: url })} />
+          <p className="text-xs text-slate-500">بعد الرفع اضغط «حفظ» فوق. المتصفح ممكن يفضل يعرض الأيقونة القديمة شوية بسبب الكاش.</p>
         </div>
         <div className="bg-white rounded-2xl border divide-y">
           {SETTINGS_KEYS.map((k) => (
@@ -565,15 +687,118 @@ export default function AdminPage() {
   if (tab === "articles") {
     panel = (
       <div className="space-y-3">
-        <button type="button" onClick={() => setEditArticle({ id: null, title: "", slug: "", excerpt: "", content: "", image: "", published: true })} className="bg-brand-700 text-white font-bold px-4 py-2.5 rounded-xl text-sm inline-flex items-center gap-1">
-          <Plus className="w-4 h-4" /> مقال جديد
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={() => setEditArticle({ id: null, title: "", slug: "", excerpt: "", content: "", image: "", media: [], published: true })} className="bg-brand-700 text-white font-bold px-4 py-2.5 rounded-xl text-sm inline-flex items-center gap-1">
+            <Plus className="w-4 h-4" /> مقال جديد
+          </button>
+          <button
+            type="button"
+            title="يرسل كل صفحات الموقع لـ Bing ومحركات البحث اللي بتدعم IndexNow علشان تتأرشف بسرعة"
+            onClick={async () => {
+              setMsg("جاري إبلاغ محركات البحث…");
+              const d = await fetch("/api/admin/indexnow", { method: "POST" }).then((r) => r.json()).catch(() => null);
+              setMsg(d?.message || "تعذّر الإبلاغ");
+            }}
+            className="border border-brand-300 text-brand-800 font-bold px-4 py-2.5 rounded-xl text-sm"
+          >
+            🔔 بلّغ محركات البحث
+          </button>
+        </div>
         {editArticle && (
           <div className="bg-white border-2 border-brand-200 rounded-2xl p-4 space-y-2">
             <input className={inputCls} placeholder="العنوان" value={editArticle.title} onChange={(e) => setEditArticle({ ...editArticle, title: e.target.value })} />
             <input className={inputCls} placeholder="ملخص" value={editArticle.excerpt} onChange={(e) => setEditArticle({ ...editArticle, excerpt: e.target.value })} />
-            <textarea className={inputCls} rows={8} placeholder="المحتوى" value={editArticle.content} onChange={(e) => setEditArticle({ ...editArticle, content: e.target.value })} />
-            <ImgUpload onUrl={(url) => setEditArticle({ ...editArticle, image: url })} />
+            <textarea className={inputCls} rows={12} placeholder="المحتوى" value={editArticle.content} onChange={(e) => setEditArticle({ ...editArticle, content: e.target.value })} />
+            <details className="text-xs text-slate-600 bg-slate-50 rounded-xl px-3 py-2">
+              <summary className="cursor-pointer font-semibold">طريقة تنسيق المقال (عناوين، قوائم، روابط، صور)</summary>
+              <div className="mt-2 leading-7" dir="rtl">
+                <code>## عنوان رئيسي</code> · <code>### عنوان فرعي</code> · <code>- عنصر قائمة</code> · <code>1. قائمة مرقمة</code>
+                <br /><code>**نص عريض**</code> · <code>&gt; ملاحظة مميزة</code> · <code>[نص الرابط](/services/plumbing)</code>
+                <br /><code>![وصف الصورة](رابط الصورة)</code> — اترك سطر فاضي بين كل فقرة والتانية.
+                <br />نصيحة للسيو: استخدم 3 عناوين رئيسية أو أكتر (بيظهر فهرس تلقائي)، واربط بصفحات الخدمات.
+              </div>
+            </details>
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-slate-500">الصورة الرئيسية</p>
+              {editArticle.image ? (
+                <div className="flex items-center gap-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={editArticle.image} alt="" className="w-32 h-20 object-cover rounded-xl border" />
+                  <button type="button" className="text-sm text-red-600 font-semibold" onClick={() => setEditArticle({ ...editArticle, image: "" })}>
+                    إزالة الصورة
+                  </button>
+                </div>
+              ) : null}
+              <ImgUpload onUrl={(url) => setEditArticle((prev: any) => (prev ? { ...prev, image: url } : prev))} />
+            </div>
+            <div className="space-y-2 pt-2">
+              <p className="text-xs font-semibold text-slate-500">صور وفيديوهات إضافية (تظهر أسفل المقال)</p>
+              {(editArticle.media || []).length > 0 && (
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                  {(editArticle.media as MediaItem[]).map((m, i) => {
+                    const yt = m.type === "youtube" ? youtubeId(m.url) : null;
+                    return (
+                      <div key={i} className="relative aspect-video rounded-xl overflow-hidden border bg-slate-100">
+                        {m.type === "image" ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={m.url} alt="" className="w-full h-full object-cover" />
+                        ) : m.type === "video" ? (
+                          <video src={m.url} className="w-full h-full object-cover" muted preload="metadata" />
+                        ) : yt ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={`https://i.ytimg.com/vi/${yt}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" />
+                        ) : null}
+                        {m.type !== "image" && (
+                          <span className="absolute bottom-1 left-1 bg-black/60 text-white rounded-md p-0.5">
+                            {m.type === "video" ? <Video className="w-3.5 h-3.5" /> : <Youtube className="w-3.5 h-3.5" />}
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          aria-label="حذف"
+                          className="absolute top-1 right-1 bg-white/90 text-red-600 rounded-full p-1 shadow"
+                          onClick={() => setEditArticle({ ...editArticle, media: editArticle.media.filter((_: any, j: number) => j !== i) })}
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              <label className="flex items-center justify-center gap-2 w-full border-2 border-dashed border-brand-300 bg-brand-50 text-brand-800 font-bold py-3 rounded-2xl cursor-pointer text-sm">
+                {uploading ? "جاري الرفع..." : "🖼️ أضف صور أو فيديوهات (تقدر تختار أكتر من ملف)"}
+                <input
+                  type="file"
+                  accept="image/*,video/*"
+                  multiple
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files || []);
+                    if (files.length) uploadArticleMedia(files);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              <form
+                className="flex gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const input = (e.currentTarget.elements.namedItem("yt") as HTMLInputElement);
+                  const url = input.value.trim();
+                  if (!youtubeId(url)) {
+                    setMsg("رابط يوتيوب غير صحيح");
+                    return;
+                  }
+                  setEditArticle({ ...editArticle, media: [...(editArticle.media || []), { type: "youtube", url }] });
+                  input.value = "";
+                }}
+              >
+                <input name="yt" className={inputCls} placeholder="أو الصق رابط فيديو يوتيوب" dir="ltr" />
+                <button type="submit" className="shrink-0 border border-brand-300 text-brand-800 font-bold px-4 rounded-xl text-sm">إضافة</button>
+              </form>
+            </div>
             <div className="flex gap-2">
               <button type="button" className="flex-1 bg-brand-700 text-white font-bold py-3 rounded-xl" onClick={async () => {
                 if (await save("/api/admin/articles", editArticle, editArticle.id ? "PUT" : "POST")) { setEditArticle(null); loadAll(); }
@@ -583,10 +808,41 @@ export default function AdminPage() {
           </div>
         )}
         {articles.map((a) => (
-          <div key={a.id} className="bg-white border rounded-2xl p-3 flex justify-between gap-2">
-            <span className="font-medium text-sm truncate">{a.title}</span>
-            <div className="flex gap-2 shrink-0">
-              <button type="button" className="text-brand-700 text-sm" onClick={() => setEditArticle(a)}>تعديل</button>
+          <div key={a.id} className="bg-white border rounded-2xl p-3 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-3 min-w-0">
+              {a.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={a.image} alt="" className="w-14 h-10 object-cover rounded-lg border shrink-0" />
+              ) : (
+                <div className="w-14 h-10 rounded-lg bg-brand-50 shrink-0" />
+              )}
+              <div className="min-w-0">
+                <span className="font-medium text-sm truncate block">{a.title}</span>
+                {!a.published ? (
+                  <span className="text-[11px] text-slate-500">مخفي عن الزوار</span>
+                ) : new Date(a.publishedAt) > new Date() ? (
+                  <span className="text-[11px] text-amber-700 bg-amber-50 rounded-full px-2">
+                    📅 مجدول — ينزل تلقائيًا يوم {new Date(a.publishedAt).toLocaleDateString("ar-KW", { day: "numeric", month: "long" })}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                title={a.published ? "المقال ظاهر للزوار — اضغط لإخفائه" : "المقال مخفي — اضغط لعرضه على الموقع"}
+                className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border transition ${a.published ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-slate-100 text-slate-500 border-slate-200"}`}
+                onClick={async () => {
+                  const published = !a.published;
+                  if (await save("/api/admin/articles", { id: a.id, published }, "PATCH")) {
+                    setArticles((prev: any[]) => prev.map((x) => (x.id === a.id ? { ...x, published } : x)));
+                  }
+                }}
+              >
+                {a.published ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                {a.published ? "عرض" : "عدم العرض"}
+              </button>
+              <button type="button" className="text-brand-700 text-sm" onClick={() => setEditArticle({ ...a, media: parseMedia(a.media) })}>تعديل</button>
               <button type="button" className="text-red-500 text-sm" onClick={async () => { if (confirm("حذف؟")) { await save("/api/admin/articles", { id: a.id }, "DELETE"); loadAll(); } }}>حذف</button>
             </div>
           </div>
@@ -617,7 +873,10 @@ export default function AdminPage() {
   return (
     <div className="min-h-[100dvh] bg-slate-100">
       <header className="hidden lg:flex sticky top-0 z-30 bg-white border-b h-14 items-center px-6 justify-between">
-        <div className="font-bold text-brand-900">لوحة تحكم {settings.name || ""}</div>
+        <div className="font-bold text-brand-900">
+          لوحة تحكم {settings.name || ""}
+          <span className="ms-2 text-[10px] font-normal text-slate-400" dir="ltr">v:{process.env.NEXT_PUBLIC_COMMIT}</span>
+        </div>
         <div className="flex items-center gap-4">
           {msg && <span className={`text-sm px-3 py-1 rounded-full ${msg.includes("تم") ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-600"}`}>{msg}</span>}
           <a href="/" target="_blank" className="text-sm text-brand-600">الموقع ↗</a>

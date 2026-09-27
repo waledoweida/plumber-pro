@@ -9,3 +9,4 @@ prisma/dev.db
 .netlify
 dist
 out
+tsconfig.tsbuildinfo

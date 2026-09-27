@@ -1,21 +1,47 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Phone, Clock, CheckCircle, Wrench, Search, Bath, Flame, Droplets, Pipette, ArrowLeft, MapPin, Star,
+  Phone, Wrench, Search, Bath, Flame, Droplets, Pipette, ArrowLeft, ShieldCheck, Clock3,
+  ScanSearch, MapPin, MessageCircle, Star, PhoneCall, ClipboardCheck, BadgeCheck, CheckCircle,
 } from "lucide-react";
+import { pageMeta, seoDescription } from "@/lib/seo";
+import { responsive } from "@/lib/markdown";
+import SectionHeading from "@/components/ui/SectionHeading";
+import LeadForm from "@/components/LeadForm";
 import {
   getSiteSettings, getTexts, getVisibility, getServices, getAreas, getWhyPoints,
-  getReviews, getGallery, getArticles,
+  getReviews, getArticles, getGallery,
 } from "@/lib/content";
-import LeadForm from "@/components/LeadForm";
+import { waLink, WA_DEFAULT } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
-const icons: Record<string, any> = {
-  Wrench, Search, Bath, Flame, Droplets, Pipette, Clock, CheckCircle,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteSettings();
+  return pageMeta({
+    title: `سباك الكويت 24 ساعة | ${site.name} | ${site.phone}`,
+    absoluteTitle: true,
+    description: seoDescription(site.description, "تسليك مجاري، كشف تهريب الماي بدون تكسير، سخانات وماطورات وتأسيس حمامات بكل مناطق الكويت"),
+    path: "/",
+    siteName: site.name,
+    alternate: "/en",
+  });
+}
+
+const icons: Record<string, any> = { Wrench, Search, Bath, Flame, Droplets, Pipette };
+
+// المشكلة اللي يعرفها الزبون ← الخدمة اللي تحلها
+const PROBLEMS: { slug: string; text: string }[] = [
+  { slug: "drain-cleaning", text: "البلاعة أو السنك مسدود" },
+  { slug: "leak-detection", text: "فاتورة الماي عالية أو في رطوبة" },
+  { slug: "heaters", text: "السخان ما يحمّي" },
+  { slug: "pumps", text: "ضغط الماي ضعيف فوق" },
+  { slug: "bathroom", text: "أبي أجدد الحمام" },
+  { slug: "pipes", text: "المواسير قديمة ومصدّية" },
+];
 
 export default async function HomePage() {
-  const [site, texts, vis, services, areas, why, reviews, gallery, articles] = await Promise.all([
+  const [site, texts, vis, services, areas, why, reviews, articles, gallery] = await Promise.all([
     getSiteSettings(),
     getTexts(),
     getVisibility(),
@@ -23,112 +49,133 @@ export default async function HomePage() {
     getAreas(),
     getWhyPoints(),
     getReviews(),
-    getGallery(),
     getArticles(3),
+    getGallery(),
   ]);
   const t = (k: string, fallback = "") => (k in texts ? texts[k] : fallback);
+  const bySlug = new Map(services.map((s) => [s.slug, s]));
+  const problems = PROBLEMS.filter((p) => bySlug.has(p.slug));
+  const whyItems = why.length
+    ? why.map((w) => w.text)
+    : ["فنيين معتمدين وخبرة بالشغل", "تعرف السعر من أول مكالمة", "أجهزة تكشف التهريب بدون تكسير", "ضمان مكتوب على التركيب", "نغطي كل محافظات الكويت", "طوارئ 24 ساعة"];
+  const wa = waLink(site.whatsapp, WA_DEFAULT);
+  const heroLines = t("home.heroDesc", "تسليك مجاري • كشف تهريب الماي بدون تكسير • سخانات وماطورات • تأسيس حمامات\nفنيين معتمدين والسعر تعرفه من أول مكالمة").split("\n");
 
   return (
     <>
+      {/* ===== الهيرو ===== */}
       {vis.showHero !== false && (
-        <section className="relative bg-gradient-to-bl from-brand-900 via-brand-800 to-brand-700 text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_30%_20%,#c97c3d,transparent_50%)]" />
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 relative">
-            <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <section className="relative hero-dark clip-slant text-white overflow-hidden">
+          <div className="absolute inset-0 dot-grid pointer-events-none" />
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-20 sm:pt-16 sm:pb-28">
+            <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
               <div>
-                {t("home.heroBadge") && (
-                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm mb-4 sm:mb-6 border border-white/10">
-                    <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
-                    <span>{t("home.heroBadge")}</span>
-                  </div>
-                )}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-2 sm:mb-3">
-                  {t("home.heroTitle", site.name)}
+                <div className="inline-flex items-center gap-2 bg-accent-500/15 border border-accent-400/40 px-3 py-1.5 text-xs sm:text-sm text-accent-200 mb-5">
+                  <span className="relative w-2 h-2 rounded-full bg-accent-400 ripple" />
+                  {t("home.heroBadge", "شغّالين 24 ساعة، حتى الجمعة والعطل")}
+                </div>
+                <h1 className="text-[2.1rem] leading-[1.2] sm:text-5xl lg:text-[3.5rem] font-bold mb-4">
+                  {t("home.heroTitle", "سباك الكويت المعتمد")}
                 </h1>
-                {t("home.heroSubtitle") && (
-                  <p className="text-base sm:text-xl text-accent-400 font-semibold mb-3 sm:mb-5">
-                    {t("home.heroSubtitle")}
-                  </p>
-                )}
-                <p className="text-brand-100 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed whitespace-pre-line">
-                  {t("home.heroDesc", site.description)}
+                <p className="text-xl sm:text-2xl font-semibold text-accent-300 mb-5">
+                  {t("home.heroSubtitle", "شغل سباكة مرتب وعليه ضمان مكتوب")}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
-                  <a
-                    href={`tel:${site.phone}`}
-                    className="inline-flex items-center justify-center gap-2 bg-accent-500 hover:bg-accent-600 text-white font-bold text-base sm:text-lg px-5 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-lg transition touch-target"
-                  >
-                    <Phone className="w-5 h-5 shrink-0" />
-                    <span className="truncate">
-                      {t("home.btnCall", "اتصل الآن")}: {site.phone}
-                    </span>
+                <div className="text-brand-100 text-sm sm:text-base leading-loose mb-8 space-y-1 max-w-xl">
+                  {heroLines.map((l, i) => <p key={i}>{l}</p>)}
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 btn-primary text-white font-bold px-7 py-4 rounded-md text-lg">
+                    <Phone className="w-5 h-5" /> {t("home.btnCall", "اتصل علينا")} <span dir="ltr">{site.phone}</span>
                   </a>
-                  <a
-                    href={`https://wa.me/${site.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-white text-brand-800 hover:bg-brand-50 font-bold text-base sm:text-lg px-5 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-lg transition touch-target"
-                  >
-                    {t("home.btnWhatsapp", "واتساب")}
+                  <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-[#25D366] text-white font-bold px-7 py-4 rounded-md transition">
+                    <MessageCircle className="w-5 h-5 text-[#25D366]" /> {t("home.btnWhatsapp", "كلمنا واتساب")}
                   </a>
                 </div>
               </div>
-              {vis.showLeadForm !== false && (
-                <div className="text-slate-900">
-                  <LeadForm
-                    areas={areas.map((a) => ({ title: a.title }))}
-                    services={services.map((s) => ({ title: s.title }))}
-                    title={t("home.formTitle", "اطلب خدمة الآن")}
-                    compact
-                  />
+
+              {/* بطاقة: شنو المشكلة؟ */}
+              <div className="bg-white text-slate-900 rounded-lg shadow-2xl shadow-black/30 overflow-hidden">
+                <div className="bg-accent-500 text-white px-5 py-4 flex items-center gap-3">
+                  <Wrench className="w-6 h-6" />
+                  <div>
+                    <h2 className="font-bold text-lg leading-tight">شنو المشكلة عندك؟</h2>
+                    <p className="text-xs text-white/90">اختار وشوف شلون نحلها</p>
+                  </div>
                 </div>
-              )}
+                <ul className="divide-y divide-slate-100">
+                  {problems.map((p) => {
+                    const s = bySlug.get(p.slug)!;
+                    const Icon = icons[s.icon] || Wrench;
+                    return (
+                      <li key={p.slug}>
+                        <Link href={`/services/${s.slug}`} className="flex items-center gap-3 px-5 py-3.5 hover:bg-accent-50 transition group">
+                          <span className="w-9 h-9 icon-tile flex items-center justify-center shrink-0"><Icon className="w-4 h-4" /></span>
+                          <span className="flex-1">
+                            <span className="block font-semibold text-sm text-brand-950">{p.text}</span>
+                            <span className="block text-xs text-slate-500">{s.title}</span>
+                          </span>
+                          <ArrowLeft className="w-4 h-4 text-accent-500 group-hover:-translate-x-1 transition" />
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
       )}
 
-      {vis.showServices !== false && (
-        <section className="py-12 sm:py-16 md:py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-brand-900 mb-2 sm:mb-3">
-                {t("home.servicesTitle", "خدماتنا")}
-              </h2>
-              <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto px-2">
-                {t("home.servicesSubtitle")}
-              </p>
+      {/* ===== ليش تثق فينا (حقائق) ===== */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 -mt-6 sm:-mt-10 relative z-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 bg-white shadow-card rounded-lg overflow-hidden">
+          {[
+            { icon: Clock3, v: "24/7", l: "مفتوحين ليل ونهار" },
+            { icon: ShieldCheck, v: "ضمان", l: "مكتوب على التركيب" },
+            { icon: ScanSearch, v: "بدون تكسير", l: "كشف التهريب بالأجهزة" },
+            { icon: MapPin, v: `${areas.length || 6} مناطق`, l: "نغطيها بالكويت" },
+          ].map((x, i) => (
+            <div key={i} className={`flex items-center gap-3 p-4 sm:p-6 ${i % 2 === 0 ? "border-e" : ""} ${i < 2 ? "border-b lg:border-b-0" : ""} lg:border-e border-slate-100`}>
+              <x.icon className="w-8 h-8 text-accent-500 shrink-0" />
+              <div>
+                <div className="text-lg sm:text-2xl font-bold text-brand-950 leading-tight">{x.v}</div>
+                <div className="text-xs sm:text-sm text-slate-600">{x.l}</div>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {services.map((s) => {
+          ))}
+        </div>
+      </section>
+
+      {/* ===== الخدمات ===== */}
+      {vis.showServices !== false && services.length > 0 && (
+        <section id="services" className="py-14 sm:py-20 scroll-mt-24">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <SectionHeading
+                eyebrow="خدماتنا"
+                title={t("home.servicesTitle", "كل شغل السباكة عندنا")}
+                subtitle={t("home.servicesSubtitle", "من سدّة البلاعة لين تأسيس الحمام من الصفر")}
+              />
+              <Link href="/services" className="hidden sm:inline-flex items-center gap-1 text-accent-600 font-bold text-sm mb-12 shrink-0">
+                كل الخدمات <ArrowLeft className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {services.map((s, i) => {
                 const Icon = icons[s.icon] || Wrench;
                 return (
-                  <Link
-                    key={s.id}
-                    href={`/services/${s.slug}`}
-                    className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-brand-300 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-                  >
-                    {s.image ? (
-                      <div className="h-36 sm:h-40 bg-slate-100 overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={s.image} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                      </div>
-                    ) : (
-                      <div className="h-24 sm:h-28 bg-gradient-to-bl from-brand-50 to-brand-100 flex items-center justify-center">
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white text-brand-700 flex items-center justify-center shadow-sm group-hover:bg-brand-700 group-hover:text-white transition">
-                          <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                        </div>
-                      </div>
-                    )}
-                    <div className="p-4 sm:p-6">
-                      <h3 className="font-bold text-base sm:text-lg text-slate-900 mb-1.5 group-hover:text-brand-700 transition">
-                        {s.title}
-                      </h3>
-                      <p className="text-slate-600 text-sm leading-relaxed mb-2 line-clamp-2">{s.short}</p>
-                      <span className="inline-flex items-center gap-1 text-brand-600 text-sm font-semibold">
-                        {t("home.servicesMore", "التفاصيل")} <ArrowLeft className="w-4 h-4" />
+                  <Link key={s.id} href={`/services/${s.slug}`} className="service-card bg-white border border-slate-200 rounded-lg p-6 flex flex-col group overflow-hidden">
+                    <div className="flex items-start justify-between mb-5">
+                      <span className="w-12 h-12 icon-tile-solid flex items-center justify-center"><Icon className="w-6 h-6" /></span>
+                      <span className="text-4xl font-bold text-slate-100 group-hover:text-accent-100 transition" dir="ltr">
+                        {String(i + 1).padStart(2, "0")}
                       </span>
                     </div>
+                    <h3 className="font-bold text-lg text-brand-950 mb-2">{s.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-5 line-clamp-3 flex-1">{s.short || s.description}</p>
+                    <span className="inline-flex items-center gap-1 text-accent-600 font-bold text-sm group-hover:gap-2 transition-all">
+                      {t("home.servicesMore", "التفاصيل")} <ArrowLeft className="w-4 h-4" />
+                    </span>
                   </Link>
                 );
               })}
@@ -137,75 +184,56 @@ export default async function HomePage() {
         </section>
       )}
 
-      {vis.showReviews !== false && reviews.length > 0 && (
-        <section className="py-12 sm:py-16 bg-slate-100">
+      {/* ===== شلون نشتغل ===== */}
+      {vis.showHowItWorks !== false && (
+        <section className="py-14 sm:py-20 bg-white blueprint-light section-defer">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-brand-900 text-center mb-8">
-              {t("home.reviewsTitle", "آراء عملائنا")}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {reviews.map((r) => (
-                <div key={r.id} className="bg-white rounded-2xl border p-5 shadow-sm">
-                  <div className="flex gap-0.5 mb-3">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${i < r.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"}`}
-                      />
-                    ))}
+            <SectionHeading eyebrow="شلون نشتغل" title="من المكالمة لين آخر برغي" center />
+            <ol className="relative grid md:grid-cols-3 gap-8">
+              <div className="hidden md:block absolute top-7 right-[16%] left-[16%] h-[3px] steps-line" aria-hidden />
+              {[
+                { icon: PhoneCall, title: "كلمنا وقول المشكلة", desc: "اتصال أو واتساب أو عبّي النموذج، وإذا تقدر صوّر لنا المشكلة" },
+                { icon: ClipboardCheck, title: "الفني يعاين ويسعّر", desc: "يوصلك الفني، يشوف الحالة ويقولك السعر قبل لا يمسك أي شي" },
+                { icon: BadgeCheck, title: "نصلح ونعطيك ضمان", desc: "نخلص الشغل وننظف المكان، ونعطيك ضمان مكتوب" },
+              ].map((step, i) => (
+                <li key={i} className="relative text-center bg-white md:bg-transparent">
+                  <div className="relative mx-auto w-14 h-14 bg-brand-950 text-white flex items-center justify-center mb-4 z-10">
+                    <step.icon className="w-6 h-6" />
+                    <span className="absolute -top-2 -start-2 w-6 h-6 bg-accent-500 text-white text-xs font-bold flex items-center justify-center">{i + 1}</span>
                   </div>
-                  <p className="text-slate-700 text-sm leading-relaxed mb-4">«{r.text}»</p>
-                  <div className="text-sm font-bold text-slate-900">{r.name}</div>
-                  {r.area && <div className="text-xs text-slate-500">{r.area}</div>}
-                </div>
+                  <h3 className="font-bold text-brand-950 text-lg mb-1">{step.title}</h3>
+                  <p className="text-slate-600 text-sm max-w-xs mx-auto leading-relaxed">{step.desc}</p>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
       )}
 
-      {vis.showGallery !== false && gallery.length > 0 && (
-        <section className="py-12 sm:py-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-brand-900 text-center mb-8">
-              {t("home.galleryTitle", "من أعمالنا")}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-              {gallery.map((g) => (
-                <div key={g.id} className="relative group rounded-2xl overflow-hidden border bg-slate-100 aspect-[4/3]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={g.image} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-8">
-                    <div className="text-white text-sm font-bold">{g.title}</div>
-                    {g.caption && <div className="text-white/80 text-xs">{g.caption}</div>}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
+      {/* ===== ليش إحنا ===== */}
       {vis.showWhy !== false && (
-        <section className="py-12 sm:py-16 bg-brand-900 text-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-                {t("home.whyTitle", "لماذا تختارنا؟")}
+        <section className="py-14 sm:py-20 section-defer">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.4fr] gap-6 lg:gap-10 items-stretch">
+            <div className="hero-dark text-white rounded-lg p-7 sm:p-10 relative overflow-hidden flex flex-col">
+              <div className="absolute inset-0 dot-grid pointer-events-none" />
+              <span className="relative eyebrow eyebrow-light">ليش إحنا</span>
+              <h2 className="relative text-2xl sm:text-3xl font-bold mt-3 mb-4 leading-snug">
+                {t("home.whyTitle", `ليش الناس تختار ${site.name}؟`)}
               </h2>
-              <p className="text-brand-100 text-base sm:text-lg mb-5 sm:mb-6">{t("home.whyDesc")}</p>
-              <a
-                href={`tel:${site.phone}`}
-                className="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 font-bold px-5 sm:px-6 py-3 rounded-xl transition touch-target"
-              >
-                <Phone className="w-5 h-5" /> {t("home.whyBtn", "اطلب خدمة")}
-              </a>
+              <p className="relative text-brand-100 leading-relaxed mb-8">
+                {t("home.whyDesc", "خبرة بالسباكة وأمانة بالشغل وضمان تقدر ترجع له.")}
+              </p>
+              <Link href="#lead" className="relative mt-auto self-start inline-flex items-center gap-2 btn-primary text-white font-bold px-6 py-3 rounded-md">
+                {t("home.whyBtn", "اطلب سباك")} <ArrowLeft className="w-4 h-4" />
+              </Link>
             </div>
-            <ul className="space-y-2.5 sm:space-y-3">
-              {why.map((w) => (
-                <li key={w.id} className="flex items-start gap-3 bg-white/5 rounded-xl px-3.5 sm:px-4 py-3 border border-white/10">
-                  <CheckCircle className="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm sm:text-base">{w.text}</span>
+            <ul className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+              {whyItems.map((text, i) => (
+                <li key={i} className="bg-white border border-slate-200 rounded-lg p-5 flex items-start gap-4">
+                  <span className="w-9 h-9 bg-accent-50 text-accent-600 font-bold flex items-center justify-center shrink-0" dir="ltr">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="font-semibold text-brand-950 leading-relaxed pt-1">{text}</p>
                 </li>
               ))}
             </ul>
@@ -213,26 +241,114 @@ export default async function HomePage() {
         </section>
       )}
 
-      {vis.showAreas !== false && (
-        <section className="py-12 sm:py-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-            <div className="inline-flex items-center gap-2 text-brand-600 mb-2 sm:mb-3">
-              <MapPin className="w-5 h-5" />
-              <span className="font-medium text-sm">{t("home.areasEyebrow", "تغطية شاملة")}</span>
+      {/* ===== صور من شغلنا ===== */}
+      {vis.showGallery !== false && gallery.length > 0 && (
+        <section className="py-14 sm:py-20 bg-white section-defer">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <SectionHeading eyebrow="من الميدان" title={t("home.galleryTitle", "صور من شغلنا")} />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {gallery.slice(0, 6).map((g) => (
+                <figure key={g.id} className="group relative overflow-hidden rounded-lg bg-slate-100 aspect-[4/3]">
+                  <img loading="lazy" decoding="async" src={g.image} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/90 to-transparent text-white p-4 pt-10">
+                    <span className="block font-bold">{g.title}</span>
+                    {g.caption && <span className="block text-xs text-brand-100">{g.caption}</span>}
+                  </figcaption>
+                </figure>
+              ))}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-brand-900 mb-2 sm:mb-3">
-              {t("home.areasTitle", "المناطق")}
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base mb-6 sm:mb-8">{t("home.areasSubtitle")}</p>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+          </div>
+        </section>
+      )}
+
+      {/* ===== كلام الزباين ===== */}
+      {vis.showReviews !== false && reviews.length > 0 && (
+        <section className="py-14 sm:py-20 section-defer">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <SectionHeading eyebrow="آراء" title={t("home.reviewsTitle", "كلام زباينا")} />
+            <div className="grid md:grid-cols-3 gap-4 sm:gap-5">
+              {reviews.slice(0, 6).map((r) => (
+                <figure key={r.id} className="bg-white border border-slate-200 border-t-4 border-t-brand-900 rounded-lg p-6 flex flex-col">
+                  <div className="flex gap-0.5 mb-3">
+                    {Array.from({ length: Math.min(5, Math.max(1, r.rating)) }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-accent-400 text-accent-400" />
+                    ))}
+                  </div>
+                  <blockquote className="text-slate-700 leading-relaxed mb-5 flex-1">«{r.text}»</blockquote>
+                  <figcaption className="flex items-center gap-3 text-sm">
+                    <span className="w-9 h-9 bg-brand-100 text-brand-900 font-bold flex items-center justify-center">{r.name.charAt(0)}</span>
+                    <span>
+                      <span className="block font-bold text-brand-950">{r.name}</span>
+                      {r.area && <span className="block text-xs text-slate-500">{r.area}</span>}
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ===== شريط الاتصال ===== */}
+      {vis.showCta !== false && (
+        <section className="bg-accent-500 text-white section-defer">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid lg:grid-cols-[1.5fr_1fr] gap-6 items-center">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2">{t("home.ctaTitle", "الماي ما ينتظر… كلمنا الحين")}</h2>
+              <p className="text-white/90 leading-relaxed">{t("home.ctaDesc", "التهريب الصغير اليوم يصير رطوبة وتكسير باجر. اتصل وخل الفني يشوفها.")}</p>
+            </div>
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
+              <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 bg-brand-950 text-white font-bold px-6 py-4 rounded-md text-lg">
+                <Phone className="w-5 h-5" /> <span dir="ltr">{site.phone}</span>
+              </a>
+              <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-brand-950 font-bold px-6 py-3.5 rounded-md">
+                <MessageCircle className="w-5 h-5 text-[#128C7E]" /> {t("home.ctaWhatsapp", "واتساب")}
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ===== نموذج الطلب ===== */}
+      {vis.showLeadForm !== false && (
+        <section id="lead" className="py-14 sm:py-20 bg-white scroll-mt-24 section-defer">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-start">
+            <div>
+              <SectionHeading
+                eyebrow="اطلب سباك"
+                title={t("home.formTitle", "عطنا رقمك ونتصل فيك")}
+                subtitle={`عبّي النموذج ونرجع لك خلال دقايق، أو اتصل مباشرة على ${site.phone}.`}
+              />
+              <ul className="space-y-3 -mt-4">
+                {["نرد على الطلبات 24 ساعة", "السعر ينقال لك قبل الشغل", "ضمان مكتوب على التركيب"].map((x) => (
+                  <li key={x} className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-accent-500 shrink-0" /> {x}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <LeadForm areas={areas.map((a) => ({ title: a.title }))} services={services.map((s) => ({ title: s.title }))} />
+          </div>
+        </section>
+      )}
+
+      {/* ===== المناطق ===== */}
+      {vis.showAreas !== false && areas.length > 0 && (
+        <section className="py-14 sm:py-20 section-defer">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <SectionHeading
+              eyebrow={t("home.areasEyebrow", "وين نشتغل")}
+              title={t("home.areasTitle", "نوصلك بكل محافظات الكويت")}
+              subtitle={t("home.areasSubtitle", "عندنا فنيين موزعين على المناطق عشان نوصلك أسرع")}
+            />
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {areas.map((a) => (
-                <Link
-                  key={a.id}
-                  href={`/areas/${a.slug}`}
-                  className="px-3.5 sm:px-5 py-2.5 sm:py-3 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-brand-300 hover:shadow-md transition"
-                >
-                  <div className="font-bold text-slate-800 text-sm sm:text-base">{a.title}</div>
-                  <div className="text-[11px] sm:text-xs text-slate-500 mt-0.5">{a.responseTime}</div>
+                <Link key={a.id} href={`/areas/${a.slug}`} className="card-hover bg-white border border-slate-200 rounded-lg p-4 sm:p-5 flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-accent-500 shrink-0" />
+                  <span className="min-w-0">
+                    <span className="block font-bold text-brand-950">سباك {a.title}</span>
+                    {a.responseTime && <span className="block text-xs text-slate-500">نوصل تقريبًا خلال {a.responseTime}</span>}
+                  </span>
                 </Link>
               ))}
             </div>
@@ -240,56 +356,35 @@ export default async function HomePage() {
         </section>
       )}
 
-      {vis.showBlog !== false && articles.length > 0 && (
-        <section className="py-12 sm:py-16 bg-slate-50">
+      {/* ===== من المدونة ===== */}
+      {vis.showBlog !== false && vis.showArticles !== false && articles.length > 0 && (
+        <section className="py-14 sm:py-20 bg-white section-defer">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="flex items-end justify-between mb-8 gap-4">
-              <h2 className="text-2xl sm:text-3xl font-bold text-brand-900">
-                {t("home.blogTitle", "من المدونة")}
-              </h2>
-              <Link href="/blog" className="text-brand-600 text-sm font-semibold hover:underline shrink-0">
-                كل المقالات
+            <div className="flex items-end justify-between gap-4">
+              <SectionHeading eyebrow="نصايح" title={t("home.blogTitle", "نصايح سباكة تفيدك")} />
+              <Link href="/blog" className="inline-flex items-center gap-1 text-accent-600 font-bold text-sm mb-12 shrink-0">
+                الكل <ArrowLeft className="w-4 h-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-3 gap-5">
               {articles.map((a) => (
-                <Link key={a.id} href={`/blog/${a.slug}`} className="bg-white rounded-2xl border p-5 hover:shadow-md transition">
-                  <h3 className="font-bold text-slate-900 mb-2 line-clamp-2">{a.title}</h3>
-                  <p className="text-sm text-slate-600 line-clamp-2">{a.excerpt}</p>
+                <Link key={a.id} href={`/blog/${a.slug}`} className="card-hover group bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col">
+                  {a.image && (
+                    <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
+                      <img loading="lazy" decoding="async" src={a.image} {...responsive(a.image)} alt={a.title} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="p-5 flex-1 flex flex-col">
+                    <h3 className="font-bold text-brand-950 mb-2 line-clamp-2 leading-snug">{a.title}</h3>
+                    <p className="text-slate-600 text-sm line-clamp-2 mb-4 flex-1">{a.excerpt}</p>
+                    <span className="text-accent-600 text-sm font-bold">اقرأ الموضوع ←</span>
+                  </div>
                 </Link>
               ))}
             </div>
           </div>
         </section>
       )}
-
-      {vis.showCta !== false && (
-        <section className="py-10 sm:py-14 bg-gradient-to-l from-brand-700 to-brand-800 text-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-            <h2 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-3">{t("home.ctaTitle")}</h2>
-            <p className="text-brand-100 text-sm sm:text-base mb-6 sm:mb-8 max-w-xl mx-auto">{t("home.ctaDesc")}</p>
-            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
-              <a
-                href={`tel:${site.phone}`}
-                className="inline-flex items-center justify-center gap-2 bg-white text-brand-800 font-bold text-lg sm:text-xl px-6 sm:px-10 py-3.5 sm:py-4 rounded-2xl shadow-lg hover:bg-brand-50 transition touch-target"
-              >
-                <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
-                {site.phone}
-              </a>
-              <a
-                href={`https://wa.me/${site.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 font-bold text-lg sm:text-xl px-6 sm:px-10 py-3.5 sm:py-4 rounded-2xl shadow-lg transition touch-target"
-              >
-                {t("home.ctaWhatsapp", "واتساب")}
-              </a>
-            </div>
-          </div>
-        </section>
-      )}
-
-      <div className="h-24 sm:h-8" aria-hidden />
     </>
   );
 }
