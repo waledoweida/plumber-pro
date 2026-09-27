@@ -61,7 +61,7 @@ export default async function ServiceAreaPage({ params }: Props) {
   const path = `/services/${s.slug}/${area.slug}`;
 
   return (
-    <div className="bg-[#f2f5f9] min-h-screen">
+    <div className="bg-[#f7f9fc] min-h-screen">
       <SetWaMessage message={wa} />
       <JsonLd
         data={[
@@ -89,10 +89,10 @@ export default async function ServiceAreaPage({ params }: Props) {
         crumbs={[{ href: "/", label: "الرئيسية" }, { href: "/services", label: "الخدمات" }, { href: `/services/${s.slug}`, label: s.title }]}
       >
         <div className="flex flex-wrap gap-2 mt-6">
-          <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 btn-primary text-white font-bold px-6 py-3 rounded-md">
+          <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 btn-primary text-brand-950 font-bold px-6 py-3 rounded-xl">
             <Phone className="w-4 h-4" /> {site.phone}
           </a>
-          <a href={waLink(site.whatsapp, wa)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-[#0a172c] font-bold px-6 py-3 rounded-md">
+          <a href={waLink(site.whatsapp, wa)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-[#131f4f] font-bold px-6 py-3 rounded-xl">
             <WaIcon className="w-4 h-4" /> واتساب
           </a>
         </div>
@@ -135,7 +135,7 @@ export default async function ServiceAreaPage({ params }: Props) {
               <h2 className="font-bold text-brand-950 text-lg mb-3">{name} بباقي المناطق</h2>
               <div className="flex flex-wrap gap-2">
                 {otherAreas.map((a) => (
-                  <Link key={a.id} href={`/services/${s.slug}/${a.slug}`} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50 text-slate-800 text-sm font-semibold px-4 py-2 rounded-md transition">
+                  <Link key={a.id} href={`/services/${s.slug}/${a.slug}`} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50 text-slate-800 text-sm font-semibold px-4 py-2 rounded-xl transition">
                     <MapPin className="w-3.5 h-3.5 text-brand-600" /> {name} {a.title}
                   </Link>
                 ))}
@@ -146,7 +146,7 @@ export default async function ServiceAreaPage({ params }: Props) {
                 <h2 className="font-bold text-brand-950 text-lg mb-3">خدمات ثانية ب{area.title}</h2>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {otherServices.map((x) => (
-                    <Link key={x.id} href={`/services/${x.slug}/${area.slug}`} className="flex items-center justify-between bg-white border border-slate-200/70 rounded-lg px-4 py-3 hover:border-brand-300 transition">
+                    <Link key={x.id} href={`/services/${x.slug}/${area.slug}`} className="flex items-center justify-between bg-white border border-slate-200/70 rounded-2xl px-4 py-3 hover:border-brand-300 transition">
                       <span className="font-semibold text-slate-800 text-sm">{serviceShort(x.title)} ب{area.title}</span>
                       <ArrowLeft className="w-4 h-4 text-brand-700" />
                     </Link>

@@ -63,8 +63,8 @@ export default function WhatsAppWidget({ phone, whatsapp, name }: { phone: strin
           aria-label={T.waDialog(title)}
           className="wa-pop mb-1 w-[min(20rem,calc(100vw-1.5rem))] bg-white rounded-xl shadow-2xl shadow-black/15 border border-slate-100 overflow-hidden"
         >
-          <div className="relative bg-brand-950 border-b-2 border-accent-500 text-white px-4 py-3.5 flex items-center gap-3">
-            <span className="relative w-11 h-11 bg-accent-500 flex items-center justify-center shrink-0">
+          <div className="relative hero-dark text-white px-4 py-3.5 flex items-center gap-3">
+            <span className="relative w-11 h-11 rounded-xl bg-accent-500 text-brand-950 flex items-center justify-center shrink-0">
               <Wrench className="w-5 h-5" />
               <span className="absolute -bottom-1 -left-1 w-3.5 h-3.5 rounded-full bg-[#25D366] border-2 border-brand-950" />
             </span>
@@ -83,11 +83,11 @@ export default function WhatsAppWidget({ phone, whatsapp, name }: { phone: strin
           </div>
           <div className="bg-[#efeae2] px-4 py-4 min-h-[6.5rem]">
             {typing ? (
-              <div className="inline-flex items-center gap-1 bg-white rounded-lg rounded-ts-sm px-4 py-3 shadow-sm" aria-label={T.waTyping}>
+              <div className="inline-flex items-center gap-1 bg-white rounded-2xl rounded-ts-sm px-4 py-3 shadow-sm" aria-label={T.waTyping}>
                 <span className="typing-dot" /><span className="typing-dot" /><span className="typing-dot" />
               </div>
             ) : (
-              <div className="wa-msg relative bg-white rounded-lg rounded-ts-sm px-4 py-3 shadow-sm text-sm text-slate-800 leading-relaxed max-w-[90%]">
+              <div className="wa-msg relative bg-white rounded-2xl rounded-ts-sm px-4 py-3 shadow-sm text-sm text-slate-800 leading-relaxed max-w-[90%]">
                 <p className="font-bold mb-1">{T.waHello}</p>
                 <p>{T.waBody}</p>
                 <span className="block text-[10px] text-slate-500 text-left mt-1" dir="ltr">✓✓ {T.waNow}</span>
@@ -100,7 +100,7 @@ export default function WhatsAppWidget({ phone, whatsapp, name }: { phone: strin
               target="_blank"
               rel="noopener noreferrer"
               onClick={close}
-              className="flex items-center justify-center gap-2 bg-[#25D366] hover:brightness-105 text-[#0a172c] font-bold py-3 rounded-lg transition"
+              className="flex items-center justify-center gap-2 bg-[#25D366] hover:brightness-105 text-[#131f4f] font-bold py-3 rounded-2xl transition"
             >
               <WaIcon className="w-5 h-5" /> {T.waCta}
             </a>

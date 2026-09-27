@@ -43,7 +43,7 @@ export default async function EnService({ params }: Props) {
   const related = all.filter((x) => x.slug !== s.slug).slice(0, 6);
 
   return (
-    <div dir="ltr" className="bg-[#f2f5f9] min-h-screen">
+    <div dir="ltr" className="bg-[#f7f9fc] min-h-screen">
       <SetWaMessage message={msg} />
       <JsonLd
         data={[
@@ -92,7 +92,7 @@ export default async function EnService({ params }: Props) {
               <h2 className="font-bold text-brand-950 text-lg mb-3">Areas we cover</h2>
               <div className="flex flex-wrap gap-2">
                 {areas.map((a) => (
-                  <Link key={a.id} href={`/en/areas/${a.slug}`} className="bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50 text-slate-800 text-sm font-semibold px-4 py-2 rounded-md transition">
+                  <Link key={a.id} href={`/en/areas/${a.slug}`} className="bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50 text-slate-800 text-sm font-semibold px-4 py-2 rounded-xl transition">
                     {enArea(a).title}
                   </Link>
                 ))}
@@ -101,7 +101,7 @@ export default async function EnService({ params }: Props) {
             <h2 className="font-bold text-slate-900 text-lg mb-3">Other services</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {related.map((r) => (
-                <Link key={r.id} href={`/en/services/${r.slug}`} className="flex items-center justify-between bg-white border border-slate-200/70 rounded-lg px-4 py-3 hover:border-brand-300 transition">
+                <Link key={r.id} href={`/en/services/${r.slug}`} className="flex items-center justify-between bg-white border border-slate-200/70 rounded-2xl px-4 py-3 hover:border-brand-300 transition">
                   <span className="font-semibold text-slate-800 text-sm">{enService(r).title}</span>
                   <ArrowRight className="w-4 h-4 text-brand-700" />
                 </Link>
@@ -110,10 +110,10 @@ export default async function EnService({ params }: Props) {
           </article>
           <aside>
             <div className="lg:sticky lg:top-20 space-y-3">
-              <a href={`tel:${site.phone}`} className="flex items-center justify-center gap-2 btn-primary text-white font-bold py-3.5 rounded-md">
+              <a href={`tel:${site.phone}`} className="flex items-center justify-center gap-2 btn-primary text-brand-950 font-bold py-3.5 rounded-xl">
                 <Phone className="w-4 h-4" /> {site.phone}
               </a>
-              <a href={waLink(site.whatsapp, msg)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-[#0a172c] font-bold py-3.5 rounded-lg">
+              <a href={waLink(site.whatsapp, msg)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-[#131f4f] font-bold py-3.5 rounded-2xl">
                 <WaIcon className="w-4 h-4" /> WhatsApp
               </a>
               <LeadForm

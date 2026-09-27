@@ -15,7 +15,7 @@ export default async function ThankYouPage() {
       <p className="text-slate-600 mb-8">واحد من فريقنا بيتصل فيك خلال دقايق. إذا الماي يهرّب الحين لا تنتظر، اتصل مباشرة:</p>
       <a
         href={`tel:${site.phone}`}
-        className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-8 py-3.5 rounded-lg"
+        className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-8 py-3.5 rounded-2xl"
       >
         <Phone className="w-5 h-5" />
         {site.phone}

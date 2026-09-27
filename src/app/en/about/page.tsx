@@ -25,7 +25,7 @@ export default async function EnAbout() {
   return (
     <div dir="ltr">
       <PageHero navLabel="Breadcrumb" title="About Us" subtitle="Certified plumbers on call day and night across Kuwait — and a written warranty on what we fit." crumbs={[{ href: "/en", label: "Home" }]} />
-      <div className="bg-[#f2f5f9]">
+      <div className="bg-[#f7f9fc]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <div className="bg-white rounded-xl border border-slate-200/70 p-6 sm:p-8 shadow-sm mb-6 text-slate-700 leading-loose">
             <p className="mb-3">
@@ -39,14 +39,14 @@ export default async function EnAbout() {
           </div>
           <ul className="grid sm:grid-cols-2 gap-3 mb-8">
             {EN_HOME.why.map((w) => (
-              <li key={w} className="flex gap-3 items-center bg-white border border-slate-200/70 rounded-lg p-4">
+              <li key={w} className="flex gap-3 items-center bg-white border border-slate-200/70 rounded-2xl p-4">
                 <span className="w-9 h-9 rounded-xl icon-tile-solid flex items-center justify-center shrink-0"><CheckCircle className="w-4 h-4 text-white" /></span>
                 {w}
               </li>
             ))}
           </ul>
           <div className="text-center">
-            <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 btn-primary text-white font-bold px-8 py-4 rounded-md w-full sm:w-auto">
+            <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 btn-primary text-brand-950 font-bold px-8 py-4 rounded-xl w-full sm:w-auto">
               <Phone className="w-5 h-5" /> {site.phone}
             </a>
           </div>

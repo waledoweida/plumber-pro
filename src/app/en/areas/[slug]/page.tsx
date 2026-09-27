@@ -39,7 +39,7 @@ export default async function EnArea({ params }: Props) {
   const msg = EN_WA.area(e.title);
 
   return (
-    <div dir="ltr" className="bg-[#f2f5f9]">
+    <div dir="ltr" className="bg-[#f7f9fc]">
       <SetWaMessage message={msg} />
       <JsonLd
         data={[
@@ -49,8 +49,8 @@ export default async function EnArea({ params }: Props) {
       />
       <PageHero navLabel="Breadcrumb" title={`Plumber in ${e.title}`} subtitle={e.description} crumbs={[{ href: "/en", label: "Home" }]}>
         <div className="flex flex-wrap justify-center gap-2 mt-6">
-          <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 bg-white text-brand-900 font-bold px-6 py-3 rounded-lg"><Phone className="w-4 h-4" /> {site.phone}</a>
-          <a href={waLink(site.whatsapp, msg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-[#0a172c] font-bold px-6 py-3 rounded-lg"><WaIcon className="w-4 h-4" /> WhatsApp</a>
+          <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 bg-white text-brand-900 font-bold px-6 py-3 rounded-2xl"><Phone className="w-4 h-4" /> {site.phone}</a>
+          <a href={waLink(site.whatsapp, msg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-[#131f4f] font-bold px-6 py-3 rounded-2xl"><WaIcon className="w-4 h-4" /> WhatsApp</a>
         </div>
       </PageHero>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">

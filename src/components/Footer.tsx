@@ -15,23 +15,23 @@ export default async function Footer() {
   const pre = en ? "/en" : "";
 
   return (
-    <footer className="bg-brand-950 text-brand-200 border-t-4 border-accent-500">
+    <footer className="bg-brand-950 text-brand-200">
       {/* شريط الاتصال */}
-      <div className="bg-accent-500 text-white">
+      <div className="bg-gold-gradient text-brand-950">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-start">
             <p className="font-bold text-lg sm:text-xl">{T.footerStrapTitle}</p>
-            <p className="text-sm text-white/90">{T.footerStrapSub}</p>
+            <p className="text-sm text-brand-900/80">{T.footerStrapSub}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-            <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 bg-brand-950 text-white font-bold px-6 py-3 rounded-md">
+            <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 bg-brand-950 text-white font-bold px-6 py-3 rounded-xl">
               <Phone className="w-4 h-4" /> <span dir="ltr">{site.phone}</span>
             </a>
             <a
               href={waLink(site.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-white text-brand-950 font-bold px-6 py-3 rounded-md"
+              className="inline-flex items-center justify-center gap-2 bg-white text-brand-950 font-bold px-6 py-3 rounded-xl"
             >
               <MessageCircle className="w-4 h-4 text-[#128C7E]" /> {T.whatsapp}
             </a>
@@ -44,9 +44,9 @@ export default async function Footer() {
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               {site.logoUrl ? (
-                <img loading="lazy" decoding="async" src={site.logoUrl} alt={name} className="h-10 w-auto object-contain bg-white p-1" />
+                <img loading="lazy" decoding="async" src={site.logoUrl} alt={name} className="h-10 w-auto object-contain bg-white p-1 rounded-lg" />
               ) : (
-                <span className="w-10 h-10 bg-accent-500 text-white flex items-center justify-center">
+                <span className="w-10 h-10 rounded-xl bg-accent-500 text-brand-950 flex items-center justify-center">
                   <Wrench className="w-5 h-5" />
                 </span>
               )}

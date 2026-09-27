@@ -43,7 +43,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
         <MapPin className="w-4 h-4 text-accent-400" /> فنيين قريبين منك ب{area.title}
       </div>
     </PageHero>
-    <div className="bg-[#f2f5f9]">
+    <div className="bg-[#f7f9fc]">
     <SetWaMessage message={waForArea(area.title)} />
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       <JsonLd
@@ -74,7 +74,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
           )}
           <a
             href={`tel:${site.phone}`}
-            className="inline-flex items-center gap-2 btn-primary text-white font-bold px-7 py-4 rounded-md"
+            className="inline-flex items-center gap-2 btn-primary text-brand-950 font-bold px-7 py-4 rounded-xl"
           >
             <Phone className="w-5 h-5" />
             {site.phone}
@@ -96,7 +96,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
               <Link
                 key={x.id}
                 href={`/services/${x.slug}/${area.slug}`}
-                className="service-card bg-white border border-slate-200/70 rounded-lg px-5 py-4 font-bold text-slate-800"
+                className="service-card bg-white border border-slate-200/70 rounded-2xl px-5 py-4 font-bold text-slate-800"
               >
                 {serviceShort(x.title)} ب{area.title}
               </Link>

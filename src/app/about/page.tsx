@@ -37,7 +37,7 @@ export default async function AboutPage() {
       />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div className="grid lg:grid-cols-[1.4fr_1fr] gap-8 mb-12">
-          <div className="bg-white border border-slate-200 rounded-lg p-6 sm:p-8">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
             <span className="eyebrow">قصتنا</span>
             <h2 className="text-2xl font-bold text-brand-950 mt-2 mb-4">{site.name} — {site.tagline}</h2>
             <p className="text-slate-700 leading-loose mb-4">{site.description}</p>
@@ -46,7 +46,7 @@ export default async function AboutPage() {
               عشان جذي فنيينا يعرفون شبكات البيوت الكويتية زين، سواء بيت قديم أو شقة بعمارة أو فيلا جديدة.
             </p>
           </div>
-          <div className="hero-dark text-white rounded-lg p-6 sm:p-8 relative overflow-hidden">
+          <div className="hero-dark text-white rounded-2xl p-6 sm:p-8 relative overflow-hidden">
             <div className="absolute inset-0 dot-grid pointer-events-none" />
             <h2 className="relative font-bold text-lg mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-accent-400" /> وين نشتغل</h2>
             <ul className="relative grid grid-cols-2 gap-2 text-sm mb-6">
@@ -54,7 +54,7 @@ export default async function AboutPage() {
                 <li key={a.id} className="bg-white/10 px-3 py-2">{a.title}</li>
               ))}
             </ul>
-            <a href={`tel:${site.phone}`} className="relative inline-flex items-center justify-center gap-2 btn-primary text-white font-bold px-6 py-3 rounded-md w-full">
+            <a href={`tel:${site.phone}`} className="relative inline-flex items-center justify-center gap-2 btn-primary text-brand-950 font-bold px-6 py-3 rounded-xl w-full">
               <Phone className="w-4 h-4" /> <span dir="ltr">{site.phone}</span>
             </a>
           </div>
@@ -63,7 +63,7 @@ export default async function AboutPage() {
         <h2 className="text-2xl font-bold text-brand-950 mb-6">شلون نشتغل</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {VALUES.map((v) => (
-            <div key={v.title} className="bg-white border border-slate-200 border-t-4 border-t-accent-500 rounded-lg p-5">
+            <div key={v.title} className="bg-white border border-slate-200 border-t-4 border-t-accent-500 rounded-2xl p-5">
               <v.icon className="w-7 h-7 text-brand-800 mb-3" />
               <h3 className="font-bold text-brand-950 mb-1.5">{v.title}</h3>
               <p className="text-sm text-slate-600 leading-relaxed">{v.text}</p>
@@ -76,8 +76,8 @@ export default async function AboutPage() {
             <h2 className="text-2xl font-bold text-brand-950 mb-6">ليش تختارنا</h2>
             <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {why.map((w, i) => (
-                <li key={w.id} className="flex gap-3 items-center bg-white border border-slate-200 rounded-lg p-4">
-                  <span className="w-8 h-8 bg-accent-50 text-accent-600 text-sm font-bold flex items-center justify-center shrink-0" dir="ltr">
+                <li key={w.id} className="flex gap-3 items-center bg-white border border-slate-200 rounded-2xl p-4">
+                  <span className="w-8 h-8 rounded-lg bg-accent-50 text-accent-700 text-sm font-bold flex items-center justify-center shrink-0" dir="ltr">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="font-semibold text-brand-950">{w.text}</span>

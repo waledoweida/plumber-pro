@@ -49,16 +49,16 @@ function buildEmailHtml(lead: LeadNotifyInput): string {
   const wa = waNumberOf(lead.phone);
   const btn = (href: string, bg: string, fg: string, label: string) =>
     `<a href="${href}" style="display:inline-block;background:${bg};color:${fg};text-decoration:none;font-weight:700;padding:12px 20px;border-radius:12px;margin:4px">${label}</a>`;
-  return `<!doctype html><html lang="ar" dir="rtl"><body style="margin:0;background:#f2f5f9;font-family:Tahoma,Arial,sans-serif">
+  return `<!doctype html><html lang="ar" dir="rtl"><body style="margin:0;background:#f7f9fc;font-family:Tahoma,Arial,sans-serif">
 <div style="max-width:560px;margin:0 auto;padding:24px 16px">
-  <div style="background:#0a172c;color:#fff;border-radius:16px 16px 0 0;padding:18px 20px;font-size:18px;font-weight:700">🔔 طلب جديد من الموقع</div>
+  <div style="background:#131f4f;color:#fff;border-radius:16px 16px 0 0;padding:18px 20px;font-size:18px;font-weight:700">🔔 طلب جديد من الموقع</div>
   <div style="background:#fff;border-radius:0 0 16px 16px;padding:8px 8px 20px">
     <table style="width:100%;border-collapse:collapse;font-size:15px">
       ${row("الاسم", lead.name)}${row("الهاتف", lead.phone)}${row("المنطقة", lead.area)}${row("الخدمة", lead.service)}${row("الرسالة", lead.message)}
     </table>
     <div style="text-align:center;padding-top:12px">
       ${btn(`tel:${esc(lead.phone)}`, "#15803d", "#fff", "📞 اتصل بالعميل")}
-      ${btn(`https://wa.me/${wa}`, "#25D366", "#0a172c", "💬 واتساب العميل")}
+      ${btn(`https://wa.me/${wa}`, "#25D366", "#131f4f", "💬 واتساب العميل")}
     </div>
     <p style="text-align:center;margin:16px 0 0;font-size:13px"><a href="${SITE_URL}/admin" style="color:#15803d">افتح لوحة التحكم</a></p>
   </div>

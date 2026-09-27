@@ -59,9 +59,9 @@ export default function Header({ initialData }: Props) {
         <img src={data.logoUrl} alt={name} className="h-9 sm:h-11 w-auto object-contain" />
       ) : (
         <>
-          <span className="w-10 h-10 sm:w-11 sm:h-11 bg-brand-900 text-white flex items-center justify-center relative">
+          <span className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl icon-tile-solid text-white flex items-center justify-center relative">
             <Wrench className="w-5 h-5" />
-            <span className="absolute -bottom-1 -end-1 w-3.5 h-3.5 bg-accent-500" />
+            <span className="absolute -bottom-1 -end-1 w-3.5 h-3.5 rounded-full bg-accent-400 ring-2 ring-white" />
           </span>
           <span className="leading-tight">
             <span className="block font-bold text-brand-950 text-base sm:text-lg">{name}</span>
@@ -91,7 +91,7 @@ export default function Header({ initialData }: Props) {
         </div>
       </div>
 
-      <div className="bg-white/95 backdrop-blur border-b-2 border-accent-500">
+      <div className="bg-white/90 backdrop-blur-xl border-b border-slate-200/70 shadow-[0_8px_30px_rgba(19,31,79,0.06)]">
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-16 sm:h-[4.5rem] flex items-center justify-between gap-3">
           {Logo}
 
@@ -103,7 +103,7 @@ export default function Header({ initialData }: Props) {
                 aria-current={isActive(n.href) ? "page" : undefined}
                 className={`relative px-3.5 py-2 text-sm font-semibold transition ${
                   isActive(n.href)
-                    ? "text-brand-900 after:absolute after:inset-x-3 after:-bottom-[1.05rem] after:h-[3px] after:bg-brand-900"
+                    ? "text-brand-900 after:absolute after:inset-x-3 after:-bottom-[1.05rem] after:h-[3px] after:rounded-full after:bg-accent-500"
                     : "text-slate-600 hover:text-brand-900"
                 }`}
               >
@@ -115,14 +115,14 @@ export default function Header({ initialData }: Props) {
           <div className="flex items-center gap-2">
             <Link
               href={en ? "/en/contact#lead" : "/#lead"}
-              className="hidden md:inline-flex items-center gap-1.5 btn-primary text-white text-sm font-bold px-5 py-2.5 rounded-md"
+              className="hidden md:inline-flex items-center gap-1.5 btn-primary text-brand-950 text-sm font-bold px-5 py-2.5 rounded-xl"
             >
               {T.book}
             </Link>
-            <a href={`tel:${data.phone}`} className="md:hidden p-2.5 bg-accent-500 text-white rounded-md" aria-label={T.call}>
+            <a href={`tel:${data.phone}`} className="md:hidden p-2.5 bg-accent-500 text-brand-950 rounded-xl" aria-label={T.call}>
               <Phone className="w-5 h-5" />
             </a>
-            <button type="button" onClick={() => setOpen(true)} className="md:hidden p-2.5 border border-slate-200 rounded-md" aria-label={T.menu}>
+            <button type="button" onClick={() => setOpen(true)} className="md:hidden p-2.5 border border-slate-200 rounded-xl" aria-label={T.menu}>
               <Menu className="w-5 h-5 text-brand-900" />
             </button>
           </div>
@@ -162,14 +162,14 @@ export default function Header({ initialData }: Props) {
               </Link>
             </nav>
             <div className="mt-auto p-4 space-y-2 bg-slate-50">
-              <a href={`tel:${data.phone}`} className="flex items-center justify-center gap-2 btn-primary text-white font-bold py-3.5 rounded-md">
+              <a href={`tel:${data.phone}`} className="flex items-center justify-center gap-2 btn-primary text-brand-950 font-bold py-3.5 rounded-xl">
                 <Phone className="w-4 h-4" /> {T.call} {data.phone}
               </a>
               <a
                 href={waLink(data.whatsapp || data.phone)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#25D366] text-[#0a172c] font-bold py-3.5 rounded-md"
+                className="flex items-center justify-center gap-2 bg-[#25D366] text-[#131f4f] font-bold py-3.5 rounded-xl"
               >
                 <MessageCircle className="w-4 h-4" /> {T.whatsapp}
               </a>

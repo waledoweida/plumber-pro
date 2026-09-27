@@ -89,7 +89,7 @@ export function renderArticle(content: string): ReactNode[] {
             decoding="async"
             width={1200}
             height={800}
-            className="w-full h-auto rounded-lg border border-slate-200 bg-white"
+            className="w-full h-auto rounded-2xl border border-slate-200 bg-white"
           />
         </figure>
       );

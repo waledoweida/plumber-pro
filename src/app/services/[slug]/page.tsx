@@ -62,7 +62,7 @@ export default async function ServicePage({ params }: Props) {
   const combo = isComboService(s.slug);
 
   return (
-    <div className="bg-[#f2f5f9] min-h-screen">
+    <div className="bg-[#f7f9fc] min-h-screen">
       <SetWaMessage message={waMsg} />
       <JsonLd
         data={[
@@ -99,13 +99,13 @@ export default async function ServicePage({ params }: Props) {
             </p>
 
             {s.image && (
-              <div className="rounded-lg overflow-hidden mb-6 border border-slate-100">
+              <div className="rounded-2xl overflow-hidden mb-6 border border-slate-100">
                 <img src={s.image} alt={s.title} fetchPriority="high" className="w-full aspect-[16/9] object-cover" />
               </div>
             )}
 
             {features.length > 0 && (
-              <div className="bg-white rounded-lg border border-slate-100 p-5 shadow-soft sm:p-6 mb-6">
+              <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-soft sm:p-6 mb-6">
                 <h2 className="font-bold text-brand-950 text-lg mb-3">وش يدخل بالخدمة؟</h2>
                 <ul className="space-y-2.5">
                   {features.map((f, i) => (
@@ -118,7 +118,7 @@ export default async function ServicePage({ params }: Props) {
               </div>
             )}
 
-            <div className="bg-white rounded-lg border border-slate-100 p-5 shadow-soft sm:p-6 mb-6 prose prose-stone max-w-none">
+            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-soft sm:p-6 mb-6 prose prose-stone max-w-none">
               <h2 className="font-bold text-brand-950 text-lg mb-3">شلون نشتغل على {serviceShort(s.title)}؟</h2>
               <ol className="space-y-2 text-slate-600 text-sm leading-relaxed mb-4 list-decimal ps-5">
                 <li>تكلمنا وتوصف المشكلة، وإذا تقدر ترسل صورة واتساب.</li>
@@ -142,7 +142,7 @@ export default async function ServicePage({ params }: Props) {
                     <Link
                       key={a.id}
                       href={combo ? `/services/${s.slug}/${a.slug}` : `/areas/${a.slug}`}
-                      className="bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50 text-slate-800 text-sm font-semibold px-4 py-2 rounded-md transition"
+                      className="bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50 text-slate-800 text-sm font-semibold px-4 py-2 rounded-xl transition"
                     >
                       {combo ? `${serviceShort(s.title)} ${a.title}` : a.title}
                     </Link>
@@ -160,7 +160,7 @@ export default async function ServicePage({ params }: Props) {
                     <Link
                       key={a.id}
                       href={`/blog/${a.slug}`}
-                      className="bg-white rounded-lg border border-slate-100 overflow-hidden hover:shadow-md transition group"
+                      className="bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-md transition group"
                     >
                       {a.image && (
                         <img loading="lazy" decoding="async" src={a.image} alt={a.title} className="w-full aspect-[16/10] object-cover" />
@@ -184,7 +184,7 @@ export default async function ServicePage({ params }: Props) {
                     <Link
                       key={r.id}
                       href={`/services/${r.slug}`}
-                      className="flex items-center justify-between bg-white border border-slate-100 rounded-lg px-4 py-3 hover:border-brand-200 transition"
+                      className="flex items-center justify-between bg-white border border-slate-100 rounded-2xl px-4 py-3 hover:border-brand-200 transition"
                     >
                       <span className="font-semibold text-slate-800 text-sm">{r.title}</span>
                       <ArrowLeft className="w-4 h-4 text-brand-700" />
@@ -197,11 +197,11 @@ export default async function ServicePage({ params }: Props) {
 
           {/* Sidebar */}
           <aside className="space-y-4">
-            <div className="bg-white rounded-lg border border-slate-100 p-5 shadow-soft sticky top-20">
+            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-soft sticky top-20">
               <h3 className="font-bold text-brand-950 mb-3">اطلب {serviceShort(s.title)}</h3>
               <a
                 href={`tel:${site.phone}`}
-                className="flex items-center justify-center gap-2 w-full btn-primary text-white font-bold py-3 rounded-md mb-2"
+                className="flex items-center justify-center gap-2 w-full btn-primary text-brand-950 font-bold py-3 rounded-xl mb-2"
               >
                 <Phone className="w-4 h-4" /> {site.phone}
               </a>
@@ -209,7 +209,7 @@ export default async function ServicePage({ params }: Props) {
                 href={waLink(site.whatsapp, waMsg)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:brightness-105 text-[#0a172c] font-bold py-3 rounded-md mb-4 transition"
+                className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:brightness-105 text-[#131f4f] font-bold py-3 rounded-xl mb-4 transition"
               >
                 <WaIcon className="w-4 h-4" /> واتساب
               </a>
