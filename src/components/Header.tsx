@@ -1,130 +1,182 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { Phone, Menu, X } from "lucide-react";
 
-type Pub = {
-  name: string;
-  logoUrl?: string;
-  phone: string;
-  tagline?: string;
-  texts?: Record<string, string>;
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
+import { Menu, X, Phone, Clock, Languages, MessageCircle, Wrench } from "lucide-react";
+import { ui } from "@/lib/i18n";
+import { isEnPath, altPath } from "@/lib/locale-client";
+import { BRAND } from "@/lib/brand";
+import { waLink } from "@/lib/whatsapp";
+
+type Props = {
+  initialData: {
+    name: string;
+    logoUrl: string;
+    phone: string;
+    whatsapp?: string;
+    tagline: string;
+    texts: Record<string, string>;
+  };
 };
 
-export default function Header({ initialData }: { initialData?: Pub }) {
+export default function Header({ initialData }: Props) {
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState<Pub>(
-    initialData || {
-      name: "شلال بيروت",
-      phone: "94021192",
-      texts: {},
-    }
-  );
+  const [data, setData] = useState(initialData);
+  const pathname = usePathname() || "/";
+  const en = isEnPath(pathname);
+  const T = ui(en ? "en" : "ar");
+  const home = en ? "/en" : "/";
+  const isActive = (href: string) => (href === home ? pathname === home : pathname.startsWith(href));
+  const name = en ? BRAND.nameEn : data.name;
 
   useEffect(() => {
-    if (initialData) return;
-    fetch("/api/public/content", { cache: "no-store" })
+    fetch("/api/public/settings")
       .then((r) => r.json())
-      .then((d) => setData(d))
+      .then((j) => {
+        if (j?.name) setData((d) => ({ ...d, ...j }));
+      })
       .catch(() => {});
-  }, [initialData]);
+  }, []);
+
+  // القائمة مفتوحة: نوقف سكرول الصفحة ونسكّرها بزر Esc
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
-  const tx = data.texts || {};
-  const t = (k: string, fb: string) => (k in tx ? tx[k] : fb);
-
-  const links = [
-    { href: "/", label: t("nav.home", "الرئيسية") },
-    { href: "/services", label: t("nav.services", "الخدمات") },
-    { href: "/about", label: t("nav.about", "من نحن") },
-    { href: "/blog", label: t("nav.blog", "المدونة") },
-    { href: "/contact", label: t("nav.contact", "اتصل بنا") },
-  ];
+  const Logo = (
+    <Link href={home} className="flex items-center gap-2.5 shrink-0">
+      {data.logoUrl ? (
+        <img src={data.logoUrl} alt={name} className="h-9 sm:h-11 w-auto object-contain" />
+      ) : (
+        <>
+          <span className="w-10 h-10 sm:w-11 sm:h-11 bg-brand-900 text-white flex items-center justify-center relative">
+            <Wrench className="w-5 h-5" />
+            <span className="absolute -bottom-1 -end-1 w-3.5 h-3.5 bg-accent-500" />
+          </span>
+          <span className="leading-tight">
+            <span className="block font-bold text-brand-950 text-base sm:text-lg">{name}</span>
+            <span className="block text-[11px] text-accent-600 font-semibold">{T.tagline}</span>
+          </span>
+        </>
+      )}
+    </Link>
+  );
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-2">
-       <Link href="/" className="flex items-center gap-2 min-w-0">
-          {data.logoUrl ? (
-            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl overflow-hidden relative bg-white border border-slate-200">
-              <Image src={data.logoUrl} alt={data.name} fill className="object-contain" />
-            </div>
-          ) : (
-            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-brand-800 text-accent-400 flex items-center justify-center font-bold text-base sm:text-lg shadow-sm">
-              د
-            </div>
-          )}
-          <div className="min-w-0">
-            <div className="font-bold text-brand-900 leading-tight text-sm sm:text-base truncate max-w-[140px] sm:max-w-none">
-              {data.name}
-            </div>
-            <div className="text-[10px] sm:text-[11px] text-slate-500 hidden sm:block truncate">
-              {t("nav.tagline", data.tagline || "سباك الكويت 24 ساعة")}
-            </div>
-          </div>
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-6 lg:gap-7">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-sm font-medium text-slate-600 hover:text-brand-700 transition whitespace-nowrap"
-            >
-              {l.label}
+    <header className="sticky top-0 z-50">
+      {/* شريط علوي */}
+      <div className="hidden md:block bg-brand-950 text-brand-100 text-xs">
+        <div className="max-w-6xl mx-auto px-6 h-9 flex items-center justify-between">
+          <span className="inline-flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-accent-400" /> {en ? "Open 24 hours · every day" : "مفتوحين 24 ساعة · كل أيام الأسبوع"}
+          </span>
+          <div className="flex items-center gap-5">
+            <a href={`tel:${data.phone}`} className="inline-flex items-center gap-1.5 hover:text-white" dir="ltr">
+              <Phone className="w-3.5 h-3.5 text-accent-400" /> {data.phone}
+            </a>
+            <Link href={altPath(pathname)} hrefLang={en ? "ar" : "en"} aria-label={T.switchAria} className="inline-flex items-center gap-1 font-semibold hover:text-white">
+              <Languages className="w-3.5 h-3.5" /> {T.switchLabel}
             </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <a
-            href={`tel:${data.phone}`}
-            className="hidden sm:inline-flex items-center gap-2 bg-brand-700 hover:bg-brand-800 text-white text-sm font-bold px-3 lg:px-4 py-2.5 rounded-xl transition shadow-sm touch-target"
-          >
-            <Phone className="w-4 h-4" />
-            <span className="hidden lg:inline">{data.phone}</span>
-            <span className="lg:hidden">{t("nav.call", "اتصل")}</span>
-          </a>
-          <button
-            className="md:hidden p-2.5 rounded-lg hover:bg-slate-100 touch-target"
-            onClick={() => setOpen(!open)}
-            aria-label={open ? "إغلاق" : "قائمة"}
-            aria-expanded={open}
-          >
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          </div>
         </div>
       </div>
 
-      {open && (
-        <div className="md:hidden fixed inset-0 top-14 z-30">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} aria-hidden />
-          <div className="relative bg-white border-t shadow-xl px-4 py-4 space-y-1 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
-            {links.map((l) => (
+      <div className="bg-white/95 backdrop-blur border-b-2 border-accent-500">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-16 sm:h-[4.5rem] flex items-center justify-between gap-3">
+          {Logo}
+
+          <nav className="hidden md:flex items-center gap-0.5 flex-1 justify-center">
+            {T.nav.map((n) => (
               <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="block py-3.5 px-3 font-medium text-slate-800 rounded-xl hover:bg-slate-50 text-base"
+                key={n.href}
+                href={n.href}
+                aria-current={isActive(n.href) ? "page" : undefined}
+                className={`relative px-3.5 py-2 text-sm font-semibold transition ${
+                  isActive(n.href)
+                    ? "text-brand-900 after:absolute after:inset-x-3 after:-bottom-[1.05rem] after:h-[3px] after:bg-brand-900"
+                    : "text-slate-600 hover:text-brand-900"
+                }`}
               >
-                {l.label}
+                {n.label}
               </Link>
             ))}
-            <a
-              href={`tel:${data.phone}`}
-              className="flex items-center justify-center gap-2 bg-brand-700 text-white font-bold py-3.5 rounded-xl mt-3 text-base"
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href={en ? "/en/contact#lead" : "/#lead"}
+              className="hidden md:inline-flex items-center gap-1.5 btn-primary text-white text-sm font-bold px-5 py-2.5 rounded-md"
             >
+              {T.book}
+            </Link>
+            <a href={`tel:${data.phone}`} className="md:hidden p-2.5 bg-accent-500 text-white rounded-md" aria-label={T.call}>
               <Phone className="w-5 h-5" />
-              {data.phone}
             </a>
+            <button type="button" onClick={() => setOpen(true)} className="md:hidden p-2.5 border border-slate-200 rounded-md" aria-label={T.menu}>
+              <Menu className="w-5 h-5 text-brand-900" />
+            </button>
           </div>
         </div>
+      </div>
+
+      {/* القائمة تنرسم على body مباشرة عشان fixed ما يتقيد بالهيدر */}
+      {open && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[70] md:hidden" dir={en ? "ltr" : "rtl"} role="dialog" aria-modal="true" aria-label={T.menu}>
+          <div className="absolute inset-0 bg-brand-950/70" onClick={() => setOpen(false)} />
+          <div className={`absolute top-0 ${en ? "right-0" : "left-0"} h-[100dvh] w-[84%] max-w-xs bg-white shadow-2xl flex flex-col overflow-y-auto`}>
+            <div className="flex justify-between items-center p-4 bg-brand-950 text-white">
+              <span className="font-bold">{name}</span>
+              <button type="button" onClick={() => setOpen(false)} className="p-2" aria-label={T.close}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <nav className="flex flex-col p-3">
+              {T.nav.map((n) => (
+                <Link
+                  key={n.href}
+                  href={n.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={isActive(n.href) ? "page" : undefined}
+                  className={`px-3 py-3.5 text-base font-semibold border-b border-slate-100 ${isActive(n.href) ? "text-accent-600" : "text-slate-800"}`}
+                >
+                  {n.label}
+                </Link>
+              ))}
+              <Link
+                href={altPath(pathname)}
+                hrefLang={en ? "ar" : "en"}
+                onClick={() => setOpen(false)}
+                className="px-3 py-3.5 inline-flex items-center gap-2 text-base font-semibold text-slate-800"
+              >
+                <Languages className="w-4 h-4" /> {T.switchLabel}
+              </Link>
+            </nav>
+            <div className="mt-auto p-4 space-y-2 bg-slate-50">
+              <a href={`tel:${data.phone}`} className="flex items-center justify-center gap-2 btn-primary text-white font-bold py-3.5 rounded-md">
+                <Phone className="w-4 h-4" /> {T.call} {data.phone}
+              </a>
+              <a
+                href={waLink(data.whatsapp || data.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-[#25D366] text-[#0a172c] font-bold py-3.5 rounded-md"
+              >
+                <MessageCircle className="w-4 h-4" /> {T.whatsapp}
+              </a>
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
     </header>
   );

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { notifyNewLead } from "@/lib/notify";
 
 const rate = new Map<string, { n: number; t: number }>();
 
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
     req.headers.get("x-real-ip") ||
     "unknown";
   if (!okRate(ip)) {
-    return NextResponse.json({ error: "محاولات كثيرة، حاول لاحقًا" }, { status: 429 });
+    return NextResponse.json({ error: "محاولات وايد، حاول بعدين" }, { status: 429 });
   }
 
   let body: any;
@@ -43,19 +44,24 @@ export async function POST(req: NextRequest) {
   const message = String(body.message || "").trim().slice(0, 1000);
 
   if (name.length < 2) {
-    return NextResponse.json({ error: "الاسم مطلوب" }, { status: 400 });
+    return NextResponse.json({ error: "اكتب اسمك" }, { status: 400 });
   }
   if (phone.length < 8) {
-    return NextResponse.json({ error: "رقم هاتف صحيح مطلوب" }, { status: 400 });
+    return NextResponse.json({ error: "اكتب رقم تلفون صحيح" }, { status: 400 });
   }
 
   try {
     const lead = await prisma.lead.create({
       data: { name, phone, area, service, message, status: "new" },
     });
+    // ننتظر التنبيه (بحد أقصى 6 ثواني) لأن الدالة على Netlify ممكن تتقفل بعد الرد مباشرة
+    await Promise.race([
+      notifyNewLead({ id: lead.id, name, phone, area, service, message }),
+      new Promise((r) => setTimeout(r, 6000)),
+    ]).catch(() => {});
     return NextResponse.json({ ok: true, id: lead.id });
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: "تعذر حفظ الطلب" }, { status: 500 });
+    return NextResponse.json({ error: "ما قدرنا نحفظ الطلب، حاول مرة ثانية" }, { status: 500 });
   }
 }

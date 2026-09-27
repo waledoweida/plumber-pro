@@ -1,0 +1,29 @@
+# فحص الموقع تلقائيًا على GitHub عند كل push أو Pull Request
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # رابط وهمي — البناء لا يتصل بقاعدة البيانات، فقط يحتاج المتغير موجود
+      DATABASE_URL: postgresql://user:pass@localhost:5432/db
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: تثبيت الحزم
+        run: npm ci
+
+      - name: فحص الأنواع (TypeScript)
+        run: npx tsc --noEmit
+
+      - name: بناء الموقع
+        run: npm run build

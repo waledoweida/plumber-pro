@@ -3,6 +3,7 @@ import { isAdminAuthenticated } from "@/lib/auth";
 import { promises as fs } from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
+import { BRAND } from "@/lib/brand";
 
 export const runtime = "nodejs";
 
@@ -43,7 +44,7 @@ async function uploadCloudinary(buf: Buffer, filename: string, contentType: stri
   const form = new FormData();
   form.append("file", new Blob([new Uint8Array(buf)], { type: contentType }), filename);
   form.append("upload_preset", preset);
-  form.append("folder", "plumber-pro");
+  form.append("folder", BRAND.uploadFolder);
 
   const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud}/image/upload`, {
     method: "POST",
@@ -63,6 +64,17 @@ async function uploadLocal(buf: Buffer, filename: string) {
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(dir, filename), buf);
   return `/uploads/${filename}`;
+}
+
+// إعدادات الرفع المباشر من المتصفح لـ Cloudinary (للفيديو — أكبر من حد حجم طلبات Netlify)
+// الـ preset لازم يكون unsigned، فعرضه للأدمن آمن
+export async function GET() {
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const cloud = process.env.CLOUDINARY_CLOUD_NAME;
+  const preset = process.env.CLOUDINARY_UPLOAD_PRESET;
+  return NextResponse.json({ cloudinary: cloud && preset ? { cloud, preset } : null });
 }
 
 export async function POST(req: NextRequest) {

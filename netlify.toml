@@ -1,13 +1,17 @@
 # Netlify — Next.js App Router
 [build]
-  command = "npx prisma generate && next build"
+  # db push يضيف الأعمدة/الجداول الجديدة لقاعدة البيانات قبل البناء.
+  # بدون --accept-data-loss: لو فيه تغيير هيمسح بيانات، البناء يفشل بدل ما يمسح.
+  # sync-content: ينشر المقالات ويحدّث النصوص الافتراضية للهجة الكويتية (الإنتاج فقط)
+  command = "npx prisma db push --skip-generate && npx prisma generate && node scripts/sync-content.mjs && next build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
   # Prisma على بيئة Netlify (Linux)
   PRISMA_CLI_BINARY_TARGETS = "rhel-openssl-3.0.x,debian-openssl-3.0.x"
-
+  NPM_FLAGS = "--include=dev"
+  
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 

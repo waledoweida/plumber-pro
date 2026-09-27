@@ -103,6 +103,7 @@ export function sanitizeSlug(input: string): string {
 export const SETTINGS_FIELDS = [
   "name",
   "logoUrl",
+  "faviconUrl",
   "tagline",
   "phone",
   "whatsapp",

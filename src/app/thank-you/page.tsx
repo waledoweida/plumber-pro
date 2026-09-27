@@ -11,18 +11,18 @@ export default async function ThankYouPage() {
       <div className="inline-flex w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 items-center justify-center mb-4">
         <CheckCircle className="w-9 h-9" />
       </div>
-      <h1 className="text-2xl sm:text-3xl font-bold text-brand-900 mb-3">تم استلام طلبك</h1>
-      <p className="text-slate-600 mb-8">هنتواصل معك في أقرب وقت. للطوارئ اتصل الآن:</p>
+      <h1 className="text-2xl sm:text-3xl font-bold text-brand-900 mb-3">تم، طلبك وصلنا ✔</h1>
+      <p className="text-slate-600 mb-8">واحد من فريقنا بيتصل فيك خلال دقايق. إذا الماي يهرّب الحين لا تنتظر، اتصل مباشرة:</p>
       <a
         href={`tel:${site.phone}`}
-        className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-8 py-3.5 rounded-2xl"
+        className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-8 py-3.5 rounded-lg"
       >
         <Phone className="w-5 h-5" />
         {site.phone}
       </a>
       <div className="mt-6">
-        <Link href="/" className="text-brand-600 text-sm hover:underline">
-          العودة للرئيسية
+        <Link href="/" className="text-brand-700 text-sm hover:underline">
+          رجوع للرئيسية
         </Link>
       </div>
     </div>
