@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { SITE_URL } from "./brand";
+import { OG_SLUGS } from "./og-images";
 export { SITE_URL };
 
 // وصف مناسب لجوجل (70–160 حرف): لو الوصف قصير نكمّله بجملة عامة عن الخدمة
@@ -48,9 +49,18 @@ export function pageMeta(opts: {
       title: opts.title,
       description: opts.description,
       ...(opts.publishedTime ? { publishedTime: opts.publishedTime } : {}),
-      ...(opts.image ? { images: [opts.image] } : {}),
+      images: [{ url: opts.image || defaultOg(en ? "en" : "ar"), width: 1200, height: 630, alt: opts.title }],
     },
+    twitter: { card: "summary_large_image", title: opts.title, description: opts.description, images: [opts.image || defaultOg(en ? "en" : "ar")] },
   };
+}
+
+// صور المشاركة (واتساب/فيسبوك/X): صورة خاصة لكل خدمة ومنطقة ومقال إذا موجودة بـ public/og
+export const defaultOg = (lang: "ar" | "en" = "ar") => (lang === "en" ? "/og/default-en.jpg" : "/og/default.jpg");
+export function ogImage(kind: keyof typeof OG_SLUGS, slug: string, lang: "ar" | "en" = "ar"): string | undefined {
+  if (!(OG_SLUGS[kind] as readonly string[]).includes(slug)) return undefined;
+  const hasEn = kind !== "articles" || !["5-signs-need-plumber", "leak-without-breaking"].includes(slug);
+  return `/og/${kind}/${lang === "en" && hasEn ? "en-" : ""}${slug}.jpg`;
 }
 
 // عنوان بدون تكرار اسم الموقع (القالب في layout بيضيفه)

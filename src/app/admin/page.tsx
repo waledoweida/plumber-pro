@@ -406,7 +406,7 @@ export default function AdminPage() {
             <div className="flex gap-2 pt-2">
               <button
                 type="button"
-                className="text-xs bg-brand-50 text-brand-800 px-3 py-1.5 rounded-lg font-medium"
+                className="text-xs bg-brand-50 text-brand-800 px-3 py-1.5 rounded-lg font-semibold"
                 onClick={async () => {
                   await save("/api/admin/leads", { id: l.id, status: "done" });
                   loadAll();
@@ -536,7 +536,7 @@ export default function AdminPage() {
                 className="w-full flex items-center justify-between px-4 py-4 text-right"
                 onClick={() => setVis({ ...vis, [k]: !on })}
               >
-                <span className="font-medium text-sm">{VIS_LABELS[k]}</span>
+                <span className="font-semibold text-sm">{VIS_LABELS[k]}</span>
                 <span className={`w-12 h-7 rounded-full relative ${on ? "bg-brand-600" : "bg-slate-300"}`}>
                   <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow ${on ? "right-0.5" : "left-0.5"}`} />
                 </span>
@@ -571,7 +571,7 @@ export default function AdminPage() {
         )}
         {services.map((s) => (
           <div key={s.id} className="bg-white border rounded-2xl p-3 flex justify-between items-center gap-2">
-            <span className="font-medium text-sm truncate">{s.title}</span>
+            <span className="font-semibold text-sm truncate">{s.title}</span>
             <div className="flex gap-2 shrink-0">
               <button type="button" className="text-brand-700 text-sm" onClick={() => setEditSvc({ ...s, features: typeof s.features === "string" ? JSON.parse(s.features || "[]") : s.features })}>تعديل</button>
               <button type="button" className="text-red-500 text-sm" onClick={async () => { if (confirm("حذف؟")) { await save("/api/admin/services", { id: s.id }, "DELETE"); loadAll(); } }}>حذف</button>
@@ -604,7 +604,7 @@ export default function AdminPage() {
         )}
         {areas.map((a) => (
           <div key={a.id} className="bg-white border rounded-2xl p-3 flex justify-between items-center">
-            <span className="font-medium text-sm">{a.title}</span>
+            <span className="font-semibold text-sm">{a.title}</span>
             <div className="flex gap-2">
               <button type="button" className="text-brand-700 text-sm" onClick={() => setEditArea(a)}>تعديل</button>
               <button type="button" className="text-red-500 text-sm" onClick={async () => { if (confirm("حذف؟")) { await save("/api/admin/areas", { id: a.id }, "DELETE"); loadAll(); } }}>حذف</button>
@@ -674,7 +674,7 @@ export default function AdminPage() {
             <div key={g.id} className="bg-white border rounded-2xl overflow-hidden">
               <img src={g.image} alt={g.title} className="h-28 w-full object-cover" />
               <div className="p-2 flex justify-between items-center">
-                <span className="text-xs font-medium truncate">{g.title}</span>
+                <span className="text-xs font-semibold truncate">{g.title}</span>
                 <button type="button" className="text-red-500 text-xs" onClick={async () => { if (confirm("حذف؟")) { await save("/api/admin/gallery", { id: g.id }, "DELETE"); loadAll(); } }}>حذف</button>
               </div>
             </div>
@@ -817,7 +817,7 @@ export default function AdminPage() {
                 <div className="w-14 h-10 rounded-lg bg-brand-50 shrink-0" />
               )}
               <div className="min-w-0">
-                <span className="font-medium text-sm truncate block">{a.title}</span>
+                <span className="font-semibold text-sm truncate block">{a.title}</span>
                 {!a.published ? (
                   <span className="text-[11px] text-slate-500">مخفي عن الزوار</span>
                 ) : new Date(a.publishedAt) > new Date() ? (
@@ -925,7 +925,7 @@ export default function AdminPage() {
               const Icon = t.icon;
               return (
                 <button key={t.id} type="button" onClick={() => setTab(t.id)}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium ${tab === t.id ? "bg-brand-700 text-white" : "text-slate-700 hover:bg-slate-50"}`}>
+                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold ${tab === t.id ? "bg-brand-700 text-white" : "text-slate-700 hover:bg-slate-50"}`}>
                   <Icon className="w-4 h-4" />{t.label}
                 </button>
               );
@@ -944,7 +944,7 @@ export default function AdminPage() {
             const Icon = t.icon;
             return (
               <button key={t.id} type="button" onClick={() => setTab(t.id)}
-                className={`flex flex-col items-center justify-center gap-0.5 text-[10px] font-medium ${tab === t.id ? "text-brand-700" : "text-slate-400"}`}>
+                className={`flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold ${tab === t.id ? "text-brand-700" : "text-slate-400"}`}>
                 <Icon className="w-5 h-5" />
                 {t.short}
               </button>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone, Clock, MapPin, ArrowRight } from "lucide-react";
 import { getAreaBySlug, getServices, getSiteSettings } from "@/lib/content";
-import { pageMeta, breadcrumbs, BUSINESS_ID } from "@/lib/seo";
+import { pageMeta, ogImage, breadcrumbs, BUSINESS_ID } from "@/lib/seo";
 import { enArea, enService, EN_WA } from "@/lib/en";
 import { waLink } from "@/lib/whatsapp";
 import PageHero from "@/components/ui/PageHero";
@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     siteName: BRAND.nameEn,
     lang: "en",
     alternate: `/areas/${a.slug}`,
+    image: ogImage("areas", a.slug, "en"),
   });
 }
 

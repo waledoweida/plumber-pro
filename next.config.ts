@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   // رقم الإصدار (commit) يظهر في لوحة التحكم — للتأكد إن آخر تحديث اتنشر
   env: {
     NEXT_PUBLIC_COMMIT: (process.env.COMMIT_REF || process.env.GITHUB_SHA || "local").slice(0, 7),
+    // رابط الموقع الأساسي وقت البناء (Netlify يعطي URL = الدومين الأساسي) — للروابط وصور المشاركة
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || "",
   },
   images: {
     formats: ["image/avif", "image/webp"],

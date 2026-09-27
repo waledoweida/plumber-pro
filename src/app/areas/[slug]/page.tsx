@@ -1,4 +1,4 @@
-import { pageMeta, seoDescription, breadcrumbs, BUSINESS_ID } from "@/lib/seo";
+import { pageMeta, ogImage, seoDescription, breadcrumbs, BUSINESS_ID } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `سباك ${area.title} 24 ساعة — تسليك وكشف تسربات`,
     description: seoDescription(area.excerpt || area.description, `سباك معتمد ب${area.title}: تسليك مجاري وبواليع، كشف تسربات بدون تكسير، سخانات ومضخات وتأسيس حمامات. اتصل ${site.phone}`),
     path: `/areas/${area.slug}`,
+    image: ogImage("areas", area.slug),
     siteName: site.name,
     alternate: `/en/areas/${area.slug}`,
   });

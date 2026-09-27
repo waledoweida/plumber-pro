@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Phone, Clock, ListOrdered } from "lucide-react";
-import { pageMeta, seoDescription, breadcrumbs, SITE_URL, BUSINESS_ID } from "@/lib/seo";
+import { pageMeta, ogImage, seoDescription, breadcrumbs, SITE_URL, BUSINESS_ID } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
 import { SetWaMessage } from "@/components/WaMessage";
 import { getSiteSettings } from "@/lib/content";
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     siteName: BRAND.nameEn,
     type: "article",
     publishedTime: new Date(a.publishedAt).toISOString(),
-    image: a.image,
+    image: ogImage("articles", a.slug, "en") || a.image,
     lang: "en",
     alternate: `/blog/${a.slug}`,
   });
@@ -96,7 +96,7 @@ export default async function EnArticlePage({ params }: Props) {
       )}
       <div className="max-w-none text-slate-700 leading-loose text-base sm:text-lg">{renderArticle(a.content)}</div>
       <div className="mt-10 bg-brand-50 rounded-2xl p-6 text-center">
-        <p className="mb-3 font-medium text-brand-900">Need a plumber now?</p>
+        <p className="mb-3 font-semibold text-brand-900">Need a plumber now?</p>
         <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-6 py-3 rounded-xl">
           <Phone className="w-5 h-5" />
           {site.phone}

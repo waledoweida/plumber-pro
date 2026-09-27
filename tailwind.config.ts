@@ -13,7 +13,7 @@ const config: Config = {
         // ذهبي — لون الأزرار واللمسات
         accent: {
           50: "#fffbeb", 100: "#fef3c7", 200: "#fde68a", 300: "#fcd34d",
-          400: "#fbbf24", 500: "#f5a70b", 600: "#d98506", 700: "#b45f09",
+          400: "#fbbf24", 500: "#f5a70b", 600: "#a35d06", 700: "#8a4a07",
         },
       },
       fontFamily: { sans: ["var(--font-plex)", "Tahoma", "Arial", "sans-serif"] },

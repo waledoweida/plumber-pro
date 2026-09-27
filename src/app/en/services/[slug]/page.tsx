@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone, CheckCircle, ArrowRight } from "lucide-react";
 import { getServiceBySlug, getServices, getAreas, getSiteSettings } from "@/lib/content";
-import { pageMeta, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
+import { pageMeta, ogImage, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
 import { enService, enArea, enServiceFaqs, EN_WA } from "@/lib/en";
 import { faqJsonLd } from "@/lib/faq";
 import { waLink } from "@/lib/whatsapp";
@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     siteName: BRAND.nameEn,
     lang: "en",
     alternate: `/services/${s.slug}`,
+    image: ogImage("services", s.slug, "en") || s.image || undefined,
   });
 }
 
