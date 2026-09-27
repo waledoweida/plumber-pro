@@ -11,5 +11,5 @@ export const BRAND = {
   uploadFolder: "plumber-pro",
 };
 
-// رابط الموقع: NEXT_PUBLIC_SITE_URL أو رابط Netlify الأساسي، وإلا الدومين
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || `https://${BRAND.domain}`).replace(/\/+$/, "");
+// رابط الموقع: NEXT_PUBLIC_SITE_URL (يتثبّت وقت البناء من رابط Netlify الأساسي — شوف next.config.ts)، وإلا الدومين
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || `https://${BRAND.domain}`).replace(/\/+$/, "");

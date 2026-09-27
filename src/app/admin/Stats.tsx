@@ -445,12 +445,12 @@ export default function Stats() {
                 <table className="w-full text-sm min-w-[560px]">
                   <thead>
                     <tr className="text-xs text-slate-500 border-b">
-                      <th className="text-right font-medium py-2">الصفحة</th>
-                      <th className="font-medium py-2 px-2">زوار</th>
-                      <th className="font-medium py-2 px-2">مشاهدات</th>
-                      <th className="font-medium py-2 px-2">واتساب</th>
-                      <th className="font-medium py-2 px-2">اتصال</th>
-                      <th className="font-medium py-2 px-2">تحويل</th>
+                      <th className="text-right font-semibold py-2">الصفحة</th>
+                      <th className="font-semibold py-2 px-2">زوار</th>
+                      <th className="font-semibold py-2 px-2">مشاهدات</th>
+                      <th className="font-semibold py-2 px-2">واتساب</th>
+                      <th className="font-semibold py-2 px-2">اتصال</th>
+                      <th className="font-semibold py-2 px-2">تحويل</th>
                     </tr>
                   </thead>
                   <tbody className="tabular-nums">
@@ -485,10 +485,10 @@ export default function Stats() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-xs text-slate-500 border-b">
-                      <th className="text-right font-medium py-2">المصدر</th>
-                      <th className="font-medium py-2">زوار</th>
-                      <th className="font-medium py-2">تواصلوا</th>
-                      <th className="font-medium py-2">تحويل</th>
+                      <th className="text-right font-semibold py-2">المصدر</th>
+                      <th className="font-semibold py-2">زوار</th>
+                      <th className="font-semibold py-2">تواصلوا</th>
+                      <th className="font-semibold py-2">تحويل</th>
                     </tr>
                   </thead>
                   <tbody className="tabular-nums">

@@ -11,11 +11,12 @@ import { getSiteSettings, getTexts, getAreas } from "@/lib/content";
 import { getLocale } from "@/lib/locale";
 import { SITE_URL, BUSINESS_ID, intlPhone, jsonLd as toJsonLd } from "@/lib/seo";
 
+// subsets = اللي ينحمّل مسبقًا بس (العربي)؛ الحروف اللاتينية تنحمّل وقت الحاجة. 3 أوزان بس عشان سرعة الموبايل
 const plex = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic", "latin"],
+  subsets: ["arabic"],
   variable: "--font-plex",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   preload: true,
 });
 
@@ -74,7 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       url: SITE_URL,
       telephone: intlPhone(site.phone),
       email: site.email,
-      image: `${SITE_URL}/opengraph-image`,
+      image: `${SITE_URL}/og/default.jpg`,
       logo: site.logoUrl || `${SITE_URL}/icon`,
       address: { "@type": "PostalAddress", addressCountry: "KW", addressLocality: "الكويت" },
       openingHoursSpecification: {

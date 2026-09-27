@@ -1,4 +1,4 @@
-import { pageMeta, seoDescription, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
+import { pageMeta, ogImage, seoDescription, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: `/services/${s.slug}`,
     siteName: site.name,
     alternate: `/en/services/${s.slug}`,
-    image: s.image || undefined,
+    image: ogImage("services", s.slug) || s.image || undefined,
   });
 }
 

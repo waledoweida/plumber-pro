@@ -1,4 +1,4 @@
-import { pageMeta, seoDescription, stripSiteName, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
+import { pageMeta, ogImage, seoDescription, stripSiteName, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
 import { SetWaMessage } from "@/components/WaMessage";
 import { waForArticle } from "@/lib/whatsapp";
@@ -27,7 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     siteName: site.name,
     type: "article",
     publishedTime: new Date(a.publishedAt).toISOString(),
-    image: a.image || undefined,
+    // الغلاف الافتراضي (webp) نستبدله بنسخة JPG للمشاركة؛ الصورة المرفوعة من لوحة التحكم تبقى زي ما هي
+    image: (!a.image || a.image.startsWith("/images/articles/") ? ogImage("articles", a.slug) : undefined) || a.image || undefined,
     alternate: enArticle(a.slug) ? `/en/blog/${a.slug}` : undefined,
   });
 }
@@ -59,7 +60,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             inLanguage: "ar",
             mainEntityOfPage: url,
             url,
-            image: a.image || `${SITE_URL}/opengraph-image`,
+            image: a.image || `${SITE_URL}/og/default.jpg`,
             author: { "@type": "Organization", name: site.name, url: SITE_URL },
             publisher: { "@id": BUSINESS_ID },
           },
@@ -134,7 +135,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </div>
       )}
       <div className="mt-10 bg-brand-50 rounded-2xl p-6 text-center">
-        <p className="mb-3 font-medium text-brand-900">المشكلة عندك الحين؟ كلمنا ونمرّك</p>
+        <p className="mb-3 font-semibold text-brand-900">المشكلة عندك الحين؟ كلمنا ونمرّك</p>
         <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 bg-brand-700 text-white font-bold px-6 py-3 rounded-xl">
           <Phone className="w-5 h-5" />
           {site.phone}

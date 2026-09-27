@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone, Clock, CheckCircle, MapPin, ArrowLeft } from "lucide-react";
 import { getServiceBySlug, getAreaBySlug, getAreas, getServices, getSiteSettings } from "@/lib/content";
-import { pageMeta, seoDescription, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
+import { pageMeta, ogImage, seoDescription, breadcrumbs, SITE_URL, BUSINESS_ID, canonicalPath } from "@/lib/seo";
 import { isComboService, comboIntro } from "@/lib/combos";
 import { serviceFaqs, faqJsonLd } from "@/lib/faq";
 import { serviceShort, searchForm, waLink, waForServiceArea } from "@/lib/whatsapp";
@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${searchForm(d.s.title)} ${d.area.title} — سباك 24 ساعة`,
     description: seoDescription(comboIntro(d.s.slug, d.area.title), `اتصل ${site.phone}`),
     path: `/services/${d.s.slug}/${d.area.slug}`,
+    image: ogImage("services", d.s.slug) || d.s.image || undefined,
     siteName: site.name,
   });
 }
