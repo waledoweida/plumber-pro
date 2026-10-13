@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidating } from "@/lib/revalidate";
 import { prisma } from "@/lib/prisma";
 import { isAdminAuthenticated, SETTINGS_FIELDS } from "@/lib/auth";
 
@@ -10,7 +11,7 @@ export async function GET() {
   return NextResponse.json(s);
 }
 
-export async function PUT(req: NextRequest) {
+async function handlePUT(req: NextRequest) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -35,3 +36,5 @@ export async function PUT(req: NextRequest) {
   });
   return NextResponse.json(s);
 }
+
+export const PUT = revalidating(handlePUT);

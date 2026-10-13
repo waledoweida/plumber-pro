@@ -64,14 +64,12 @@ async function findBySlug<T extends { slug: string }>(
   exact: (slugs: string[]) => Promise<T | null>,
   all: () => Promise<T[]>
 ): Promise<T | null> {
-  try {
-    const hit = await exact(slugCandidates(raw));
-    if (hit) return hit;
-    const want = normalizeSlug(raw);
-    return (await all()).find((x) => normalizeSlug(x.slug) === want) ?? null;
-  } catch {
-    return null;
-  }
+  // بدون try/catch عن قصد: الصفحات متخزّنة كاش، فلو الداتابيز وقعت لحظيًا الأفضل الطلب يفشل
+  // (والزائر ياخد النسخة القديمة من الكاش) بدل ما تتخزّن صفحة 404 لمدة ساعة.
+  const hit = await exact(slugCandidates(raw));
+  if (hit) return hit;
+  const want = normalizeSlug(raw);
+  return (await all()).find((x) => normalizeSlug(x.slug) === want) ?? null;
 }
 
 export const getServiceBySlug = cache((slug: string) =>

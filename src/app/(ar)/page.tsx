@@ -14,7 +14,8 @@ import {
 } from "@/lib/content";
 import { waLink, WA_DEFAULT } from "@/lib/whatsapp";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSettings();

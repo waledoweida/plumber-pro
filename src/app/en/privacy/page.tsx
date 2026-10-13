@@ -3,7 +3,8 @@ import Link from "next/link";
 import { getSiteSettings } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
 import { BRAND } from "@/lib/brand";
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   return pageMeta({ title: `Privacy Policy | ${BRAND.nameEn}`, absoluteTitle: true, description: `Privacy policy for the ${BRAND.nameEn} website.`, path: "/en/privacy", siteName: BRAND.nameEn, lang: "en", alternate: "/privacy" });
 }

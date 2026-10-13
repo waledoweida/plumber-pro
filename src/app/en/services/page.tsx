@@ -7,7 +7,8 @@ import { enService } from "@/lib/en";
 import PageHero from "@/components/ui/PageHero";
 import { BRAND } from "@/lib/brand";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 const icons: Record<string, any> = { Wrench, Search, Bath, Flame, Droplets, Pipette, Clock, CheckCircle, Wind, Shield };
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidating } from "@/lib/revalidate";
 import { prisma } from "@/lib/prisma";
 import { isAdminAuthenticated, sanitizeSlug } from "@/lib/auth";
 import { parseMedia } from "@/lib/media";
@@ -13,7 +14,7 @@ export async function GET() {
   );
 }
 
-export async function POST(req: NextRequest) {
+async function handlePOST(req: NextRequest) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function PUT(req: NextRequest) {
+async function handlePUT(req: NextRequest) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -79,7 +80,7 @@ export async function PUT(req: NextRequest) {
 }
 
 // زر «ظاهر/مخفي» في قائمة المقالات: يغيّر حالة العرض بس بدون ما يلمس باقي المقال
-export async function PATCH(req: NextRequest) {
+async function handlePATCH(req: NextRequest) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -100,7 +101,7 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextRequest) {
+async function handleDELETE(req: NextRequest) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -119,3 +120,8 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "فشل الحذف" }, { status: 500 });
   }
 }
+
+export const POST = revalidating(handlePOST);
+export const PUT = revalidating(handlePUT);
+export const PATCH = revalidating(handlePATCH);
+export const DELETE = revalidating(handleDELETE);

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { CheckCircle, Phone } from "lucide-react";
 import { getSiteSettings } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 export default async function ThankYouPage() {
   const site = await getSiteSettings();

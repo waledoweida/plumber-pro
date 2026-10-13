@@ -12,7 +12,7 @@ export async function customIcon(px: number, transparent: boolean): Promise<Resp
       const bg = transparent ? "" : ",b_white";
       url = url.replace("/upload/", `/upload/c_pad,w_${px},h_${px}${bg},f_png/`);
     }
-    const r = await fetch(url, { cache: "no-store" });
+    const r = await fetch(url, { next: { revalidate: 3600 } });
     const type = r.headers.get("content-type") || "";
     if (!r.ok || !type.startsWith("image/")) return null;
     return new Response(await r.arrayBuffer(), {
