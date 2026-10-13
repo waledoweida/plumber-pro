@@ -1,5 +1,6 @@
 // مزامنة المحتوى أثناء بناء الإنتاج على Netlify:
-//  1) مقالات content/articles/*.md — تنضاف مرة وحدة بس (واللي تاريخها بالمستقبل تنضاف مجدولة). ولو المقال لسا بنسخته القديمة
+//  1) مقالات content/articles/*.md — تنضاف مرة وحدة بس (واللي تاريخها بالمستقبل تنضاف مجدولة، وإذا تغيّر
+//     تاريخ مقال لسا مجدول بالملف، يتعدّل موعده). ولو المقال لسا بنسخته القديمة
 //     (ما انعدل من لوحة التحكم) يتحدّث للنسخة الجديدة.
 //  2) نصوص الموقع باللهجة الكويتية content/site-content.json — أي نص افتراضي قديم يتبدّل بالصياغة الكويتية،
 //     وأي نص انعدل من لوحة التحكم ما نلمسه أبدًا. إعدادات الموقع (الاسم والرقم) ما تنلمس.
@@ -46,8 +47,17 @@ async function syncArticles(prisma) {
       content: a.content.slice(0, 20000),
       image: a.image || "",
     };
+    // تاريخ مستقبلي بالملف = مقال مجدول: يظهر بالموقع تلقائيًا الساعة 8 الصبح (بتوقيت الكويت) بهاليوم
+    const at = /^\d{4}-\d{2}-\d{2}$/.test(a.date || "") ? new Date(`${a.date}T08:00:00+03:00`) : null;
     const existing = await prisma.article.findUnique({ where: { slug: a.slug } });
     if (existing) {
+      // مقال لسا مجدول (ما انشر) وتاريخه بالملف تغيّر لتاريخ مستقبلي ثاني: نمشي على تاريخ الملف.
+      // المقالات اللي انشرت خلاص ما نلمس تاريخها أبدًا.
+      const pending = new Date(existing.publishedAt).getTime() > now;
+      if (pending && at && at.getTime() > now && new Date(existing.publishedAt).getTime() !== at.getTime()) {
+        await prisma.article.update({ where: { slug: a.slug }, data: { publishedAt: at } });
+        log(`article rescheduled to ${a.date}:`, a.slug);
+      }
       // نحدّث بس إذا المحتوى الحالي نسخة قديمة معروفة من نفس الملف (يعني ما انعدل يدويًا)
       const replaces = (a.replaces || "").split(",").map((x) => x.trim()).filter(Boolean);
       const cur = sha(existing.content);
@@ -60,8 +70,6 @@ async function syncArticles(prisma) {
     }
     // انضاف قبل وانحذف من لوحة التحكم؟ ما نرجّعه
     if (await seen(prisma, `article:${a.slug}`)) continue;
-    // تاريخ مستقبلي بالملف = مقال مجدول: يظهر بالموقع تلقائيًا الساعة 8 الصبح (بتوقيت الكويت) بهاليوم
-    const at = /^\d{4}-\d{2}-\d{2}$/.test(a.date || "") ? new Date(`${a.date}T08:00:00+03:00`) : null;
     const publishedAt = at && at.getTime() > now ? at : new Date(now - i * 60_000);
     await prisma.article.create({
       data: { ...data, slug: a.slug, published: true, publishedAt },
