@@ -442,6 +442,306 @@ We insulate and replace exposed pipes with our [pipework](/en/services/pipes) se
 
 You can't stop the summer heat, but simple insulation, shade and regular checks reduce its effect on your home. Want your tank and pipes checked before next summer? [Contact us](/en/contact).`,
   },
+  {
+    slug: "toilet-clogged",
+    title: "Blocked Toilet? How to Unblock It Safely Yourself, and How to Tell When the Main Line Is Blocked",
+    excerpt:
+      "Toilet not draining and the water rising? We explain how to unblock a toilet yourself the right way, what to avoid, and how to tell a simple toilet blockage from a main-line blockage that needs a technician.",
+    image: "/images/articles/en-toilet-clogged-cover.webp",
+    content: `You flush and, instead of going down, the water slowly rises… every home goes through it. The good news is that most toilet blockages are simple and can be cleared in minutes if you do it right. More importantly, you need to know when the problem is bigger than the toilet, so you don't waste time or damage anything.
+
+## First: stop the water
+
+If the water is rising after a flush, **don't flush again**. Lift the cistern lid and raise the float, or close the small valve behind the toilet. This stops the water overflowing onto the floor.
+
+## Why do toilets block?
+
+- **Wet wipes:** even "flushable" ones don't break down like toilet paper.
+- **Too much paper at once.**
+- **Things dropped by accident:** children's toys, toothpaste caps, brushes.
+- **Sanitary products and cotton.**
+- **Mineral scale** inside the outlet of older toilets.
+
+
+## How to unblock it yourself (step by step)
+
+### 1. Prepare the area
+
+Put newspaper or towels around the toilet and wear gloves. If the water is near the rim, bail some out into a bucket with a cup.
+
+### 2. Use the right plunger
+
+There are two types: a flat cup plunger for basins, and a **flange plunger** for toilets, with an extra sleeve underneath. The flange plunger seals properly over the toilet outlet and gives strong pressure.
+
+- Place it over the outlet so it seals completely.
+- The plunger should be covered with water, so it pushes water, not air.
+- Push gently the first time to let the air out, then push and pull firmly 10–15 times.
+- Lift it and check: if the water drains, the blockage has cleared.
+
+### 3. Hot (not boiling) water and dish soap
+
+If the blockage is paper or waste, pour in some dish soap, then a bucket of **hot — not boiling —** water from a low height, and wait 15 minutes. Boiling water can crack a ceramic toilet or damage plastic joints.
+
+### 4. A toilet auger
+
+If the plunger doesn't work, a hand-held toilet auger has a protected end that won't scratch the ceramic. Feed it in and turn it until you feel the blockage, then keep turning until it breaks up or catches on the auger so you can pull it out.
+
+## What not to do
+
+- **Don't use acids or strong chemical drain openers** — they don't work on solid blockages, can splash back when you plunge, and damage pipes and seals.
+- **Don't mix cleaning products.**
+- **Don't push wires or coat hangers in** — they scratch the toilet and can push the object further in.
+- **Don't keep flushing** hoping it will clear.
+
+## When is the blockage not in the toilet?
+
+If you notice any of these, the problem is probably in the main line or the [manhole](/en/blog/manhole-overflow), not the toilet:
+
+- **Several fixtures blocked** at once: toilet, floor drain and basin.
+- **Water coming up from the floor drain** when you flush.
+- **Gurgling** in the toilet when the washing machine drains.
+- **Ground-floor bathrooms** are blocked while upstairs is fine.
+
+These cases need [drain unblocking](/en/services/drain-cleaning) with proper equipment, and sometimes a camera inspection to find exactly where the blockage is.
+
+## The toilet isn't blocked but flushes weakly?
+
+If the flush is weak and water drains slowly without a full blockage, the rinse holes under the rim may be blocked with scale, or the cistern itself may be at fault. See our guide to [a running or hissing cistern](/en/blog/toilet-cistern-running).
+
+## Frequently asked questions
+
+### Something solid fell in — should I plunge?
+
+No. Plunging can push the object into the bend and make it harder to remove. Try to take it out with gloves if you can see it; if you can't, call a technician — sometimes the toilet has to be removed to get it out from below.
+
+### It keeps blocking — why?
+
+There may be scale inside the toilet, a wrong slope on the drain line, or a partial blockage in the main line. The fix here isn't the plunger; it's inspecting the line.
+
+## Summary
+
+Most toilet blockages clear with the right plunger and some patience. If the blockage keeps coming back, several fixtures are blocked, or water comes up from the floor drain, it's a line problem, not a toilet problem. [Contact us](/en/contact) and we'll clear the line with the right equipment, without breaking.`,
+  },
+  {
+    slug: "ceiling-water-stain",
+    title: "Water Stain on the Ceiling: From the Bathroom Upstairs, the AC, or the Roof? How to Find the Source",
+    excerpt:
+      "A yellow stain or water dripping from the ceiling? We explain how to tell a leak from the bathroom upstairs apart from AC condensation, a roof leak or a water pipe in the ceiling, with simple tests to do before the technician arrives.",
+    image: "/images/articles/en-ceiling-water-stain-cover.webp",
+    content: `A water stain on the ceiling is one of the most worrying things at home, because you can't see where it's coming from. It could be the bathroom upstairs, the AC, the roof, or a water pipe inside the ceiling — and each source has a different fix. So the first step isn't breaking anything; it's finding out where the water comes from.
+
+## What to do first
+
+1. **Put a bucket and a towel** under the drip.
+2. **If the stain is near a light or spotlight**, switch off that circuit at the breaker board.
+3. **Photograph the stain and mark its edge in pencil**, so you can tell later whether it's growing.
+4. **Notice when it gets worse:** after a shower? When the AC is on? After rain? Or all the time?
+
+
+## 4 common sources and the signs of each
+
+### 1. The bathroom upstairs
+
+**Signs:** the stain is directly under the bathroom and gets worse after someone showers or flushes.
+
+**Possible causes:**
+- Worn grout or silicone around the bath and shower letting water through.
+- A loose toilet or floor drain connection.
+- Weak bathroom floor waterproofing from the start.
+
+**A simple test:** have someone shower upstairs for 10 minutes and see if the stain gets wetter. Then pour water into the floor drain only, without the shower, to tell the drain apart from the joints.
+
+### 2. The AC
+
+**Signs:** the stain is near an AC vent or indoor unit, gets worse in peak summer when the AC is running, and has nothing to do with water use.
+
+**Cause:** a blocked or disconnected condensate drain pipe, or an overflowing drip tray.
+
+**Fix:** cleaning the drain line and tray — more a job for an AC technician than a plumber.
+
+### 3. The roof
+
+**Signs:** the stain is on the top floor, appears or grows **after rain**, and is often near corners or edges.
+
+**Cause:** worn roof waterproofing, or blocked rainwater outlets letting water pool.
+
+### 4. A water pipe inside the ceiling
+
+**Signs:** the stain **never dries** and grows even when no one has used the bathroom; sometimes **the water meter turns** while everything is off. If it's a hot water pipe, the ceiling may feel warm.
+
+**Test:** do the [water meter test](/en/blog/water-meter-leak-test). If the meter moves with every tap closed, the leak is from a pressure pipe, not a drain.
+
+## Why act quickly?
+
+- Water weakens plaster and false ceilings, and part of it can fall.
+- Damp brings **mould** and smells, and affects health.
+- It's dangerous near electrics.
+- A small leak today becomes bigger breaking work months later.
+
+## How we find the source without breaking
+
+With our [leak detection](/en/services/leak-detection) service we use:
+
+- **A thermal camera** that shows the path of hot or cold water inside ceilings and walls.
+- **A moisture meter** to find the wettest point, usually the closest to the source.
+- **A pressure test** on the pipes — if the pressure drops, we know which line is leaking.
+- **A dye test** for drains, to see whether the water comes from the drainage.
+
+Once we've found it, we open a small hole only at the leak and fix it.
+
+## Frequently asked questions
+
+### The neighbours upstairs don't want their bathroom opened — what can I do?
+
+Identify the source first with equipment from your side. A clear report of where the leak is makes it much easier to agree with the neighbours or the building owner, since the repair is in the bathroom upstairs.
+
+### The stain has dried — is the problem solved?
+
+Not necessarily. It may have dried because no one used the bathroom for a while, and it can come back. Watch the pencil line for two weeks.
+
+## Summary
+
+A ceiling stain is a message, and the key is reading it right: when it gets worse tells you where it comes from. Start with observation and simple tests, and if the source isn't clear, [contact us](/en/contact) — we'll find the leak with equipment and fix it with the smallest opening possible.`,
+  },
+  {
+    slug: "wall-hung-toilet",
+    title: "Wall-Hung or Floor-Standing Toilet? Pros, Cons, and What a Wall-Hung Toilet Needs to Be Installed Properly",
+    excerpt:
+      "Renovating your bathroom and torn between a wall-hung and a floor-standing toilet? We compare them on space, cleaning, maintenance and cost, and explain what must be ready inside the wall before a wall-hung toilet goes in.",
+    image: "/images/articles/en-wall-hung-toilet-cover.webp",
+    content: `Wall-hung toilets are now common in many new homes and apartments in Kuwait, because they look cleaner and make the bathroom feel bigger. But it isn't just "a different-looking toilet" — installing one needs preparation inside the wall from the rough-in stage. So before you decide, know the difference and what each one needs.
+
+## The basic difference
+
+- **Floor-standing toilet:** fixed to the floor, with the cistern visible above it or attached to it.
+- **Wall-hung toilet:** fixed to a **steel frame** inside the wall, with the cistern **concealed in the wall**; all you see is the bowl and the flush plate.
+
+
+## Advantages of a wall-hung toilet
+
+- **Easier cleaning:** the floor underneath is open, so you can mop it all with no corners.
+- **Feels more spacious:** the floor runs uninterrupted.
+- **Height of your choice:** you can set the bowl height at installation to suit your family.
+- **Usually a quieter flush**, because the cistern is inside the wall.
+
+## Disadvantages
+
+- **Higher cost:** the bowl + the frame + the concealed cistern + the labour.
+- **Needs a suitable wall:** either a load-bearing wall or a new partition built in front of the frame.
+- **Maintenance through the flush plate opening:** most cistern parts are replaced through it, so the brand must be well known with parts available.
+- **Doesn't suit every renovation:** if you don't want to open the wall, a floor-standing toilet is much simpler.
+
+## Advantages of a floor-standing toilet
+
+- **Cheaper and quicker to install.**
+- **Easier maintenance**, since everything is visible.
+- **No wall breaking** if the drain is in the right place.
+
+## If you choose wall-hung: what must be ready before tiling?
+
+This is where most mistakes happen, and after tiling, fixing them means breaking:
+
+1. **A genuine frame fixed properly** to the floor and wall, and levelled.
+2. **The bowl height agreed** before the frame is fixed.
+3. **A drain pipe of the right diameter** with the correct slope, and a tight connection to the bowl.
+4. **An isolation valve for the cistern** inside the frame, reachable through the flush plate opening.
+5. **A pressure test on the water line and a drainage test** before the wall is closed.
+6. **The flush plate position** planned with the tile layout.
+
+See also our guide to [bathroom rough-in mistakes](/en/blog/bathroom-rough-in-mistakes) — the same rule applies: what's done before tiling decides how long the bathroom lasts.
+
+## Frequently asked questions
+
+### Can a wall-hung toilet take the weight?
+
+Yes, if the frame is genuine and properly fixed to the floor and wall. The frame carries the weight, not the wall itself. Problems happen when the frame is cheap or poorly fixed.
+
+### If the concealed cistern fails, do we have to break the wall?
+
+Usually not. Most parts are replaced through the flush plate opening — that's why it matters to choose a well-known brand with parts available locally.
+
+### Can I convert a floor-standing toilet to wall-hung without a full renovation?
+
+It's possible, but it needs the wall opened and the drain adjusted, then part of the wall retiled. It's best done as part of a bathroom renovation.
+
+## Summary
+
+A wall-hung toilet is an excellent choice if you're renovating and want a cleaner look and easier cleaning — as long as it's set up properly from the start. A floor-standing toilet remains the practical choice for a quick, lower-cost solution. With our [bathroom renovation and rough-in](/en/services/bathroom) service we install the frame and drainage and test them before tiling. [Contact us](/en/contact) and we'll help you choose.`,
+  },
+  {
+    slug: "plumbing-emergency-main-valve",
+    title: "Plumbing Emergencies: Where the Main Valve Is, and What to Do in the First 10 Minutes Until the Technician Arrives",
+    excerpt:
+      "A burst pipe or water flooding the floor? The first 10 minutes make a big difference. We explain where to find the main valve in Kuwaiti homes, how to shut off water and electricity safely, and what to do in the 5 most common plumbing emergencies.",
+    image: "/images/articles/en-plumbing-emergency-main-valve-cover.webp",
+    content: `A pipe bursts under the sink, the washing machine hose comes loose and water covers the floor, or the water heater starts leaking… at that moment every minute counts. The difference between minor and major damage is usually one thing: **knowing where the main valve is and closing it fast**. Keep this guide handy and share it with your household.
+
+## Where is the main valve?
+
+Most Kuwaiti homes have several valves, each shutting off a different part:
+
+- **The meter valve:** at the water meter outside the house or by the boundary wall. It stops water coming from the network into the tank.
+- **The valve after the pump:** stops water going from the ground tank into the house. This is **the most important one** for a leak inside the home.
+- **The roof tank valve:** on the roof, on the pipe coming down from the upper tank.
+- **Bathroom and kitchen valves:** one per bathroom, and sometimes a small valve under each basin and behind each toilet.
+
+> **Do this now, not during an emergency:** walk around the house, find every valve, try closing and opening it, and label it. A valve that hasn't been turned in years may be stuck — better to find out now.
+
+
+## The first 10 minutes, in order
+
+1. **Close the valve nearest the problem.** If you don't know it or it doesn't work, close the valve after the pump and **switch off the pump**.
+2. **If water is near sockets or appliances, switch off the electricity** to that area at the breaker board. Don't walk through water that has reached sockets.
+3. **Open a tap on the ground floor** to drain the water left in the pipes and relieve the pressure.
+4. **If it's hot water, switch off the water heater** (electricity or gas) before closing its valve.
+5. **Remove water and protect belongings:** lift rugs and appliances and mop up.
+6. **Photograph the damage** for insurance or the building owner.
+7. **Call the technician** and tell them exactly what happened and what you've shut off.
+
+## The 5 most common emergencies and what to do
+
+### 1. A burst pipe or a loose joint
+
+Close the main valve immediately and switch off the pump. If the leak is inside a wall, don't break it yourself — let the technician pinpoint it.
+
+### 2. A washing machine or heater hose comes off
+
+Close the appliance's valve if there is one, otherwise the main. Unplug the appliance before touching it.
+
+### 3. The water heater leaks or the safety valve discharges heavily
+
+Switch off the heater (electricity or gas) and close the cold water valve feeding it. Never block the safety valve — it's there to protect you. See our [water heater types guide](/en/blog/water-heater-types-guide).
+
+### 4. Sewage coming back up the drains
+
+Stop using water completely, because any water you drain will come out of the same drain. This is usually a main-line or [manhole](/en/blog/manhole-overflow) problem and needs unblocking with equipment.
+
+### 5. Water coming through the ceiling
+
+Put a bucket down, switch off nearby lights, and close the upstairs bathroom valve if you can reach it. Then see our guide to [ceiling water stains](/en/blog/ceiling-water-stain).
+
+## Put together a simple emergency kit
+
+- An adjustable spanner or valve key.
+- A torch.
+- Towels and a bucket.
+- PTFE tape and temporary pipe repair tape.
+- A 24/7 plumber's number saved in your phone.
+
+## Frequently asked questions
+
+### The valve is stuck and won't close — what do I do?
+
+Don't force it or it may break in your hand. Go to the valve before it (after the pump or at the meter) and switch off the pump. After the emergency, replace the stuck valve.
+
+### Can I shut off water to just one bathroom?
+
+Yes, if the bathroom has its own valve — which we recommend in any new installation, so a repair doesn't shut down the whole house.
+
+## Summary
+
+Plumbing emergencies don't give you time to think, so prepare now: know your valves, test them, and keep a technician's number ready. If an emergency happens, shut off the water, switch off the electricity and the pump, and [contact us](/en/contact). Our team reaches you 24/7 across Kuwait for [pipe repair and installation](/en/services/pipes).`,
+  },
 ];
 
 export const enArticle = (slug: string) => EN_ARTICLES.find((a) => a.slug === slug);

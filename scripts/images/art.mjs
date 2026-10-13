@@ -56,4 +56,28 @@ export const ART = {
     <path d="M60 210 H240" stroke="${L}" stroke-width="8"/>
     <path d="M150 290 V340 H380" fill="none" stroke="${N2}" stroke-width="24"/>
     <path d="M40 300 H260" stroke="${N}" stroke-width="14"/>`,
+  plunger: `<path d="M100 170 H300 Q300 280 200 290 Q100 280 100 170z" fill="${W}" stroke="${N}" stroke-width="12"/>
+    <path d="M160 290 L150 360 H250 L240 290" fill="${W}" stroke="${N}" stroke-width="12"/>
+    <rect x="188" y="20" width="24" height="130" rx="10" fill="${C}"/>
+    <path d="M140 200 Q140 140 200 140 Q260 140 260 200z" fill="${N2}"/>
+    <path d="M110 120 q-20 -20 0 -40 M290 120 q20 -20 0 -40" fill="none" stroke="${C2}" stroke-width="8" stroke-linecap="round"/>`,
+  ceiling: `<rect x="20" y="40" width="360" height="40" fill="${N}"/>
+    <rect x="20" y="80" width="360" height="24" fill="${L}"/>
+    <ellipse cx="200" cy="104" rx="110" ry="22" fill="${C2}" opacity=".9"/>
+    <path d="M200 130 q22 34 0 52 q-22 -18 0 -52z" fill="${N2}"/>
+    <path d="M200 220 q16 26 0 38 q-16 -12 0 -38z" fill="${N2}" opacity=".7"/>
+    <path d="M120 360 h160 l-20 -60 h-120z" fill="${W}" stroke="${N}" stroke-width="12"/>
+    <path d="M140 330 h120" stroke="${N2}" stroke-width="10"/>`,
+  wallhung: `<rect x="250" y="20" width="130" height="360" fill="${L}"/>
+    <rect x="270" y="60" width="90" height="140" rx="10" fill="${W}" stroke="${N}" stroke-width="10"/>
+    <rect x="292" y="110" width="46" height="30" rx="6" fill="${C}"/>
+    <path d="M250 220 H90 Q60 220 60 250 Q70 310 150 310 H250z" fill="${W}" stroke="${N}" stroke-width="12"/>
+    <path d="M30 380 H380" stroke="${N2}" stroke-width="14"/>
+    <path d="M70 350 H230" stroke="${C}" stroke-width="8" stroke-dasharray="14 10"/>`,
+  valve: `<path d="M0 240 H400" stroke="${N2}" stroke-width="44"/>
+    <rect x="140" y="200" width="120" height="80" rx="14" fill="${N}"/>
+    <rect x="190" y="130" width="20" height="70" fill="${N}"/>
+    <rect x="110" y="110" width="180" height="34" rx="17" fill="${C}"/>
+    <path d="M60 330 q22 34 0 52 q-22 -18 0 -52z" fill="${C2}"/>
+    <path d="M300 60 a50 50 0 1 1 -1 0" fill="none" stroke="${C2}" stroke-width="10" stroke-dasharray="20 12"/>`,
 };

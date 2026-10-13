@@ -37,10 +37,14 @@ const tpl = ({ lang, kicker, title, sub, art }) => {
 </div></body></html>`;
 };
 
+// ONLY=slug1,slug2 يولّد صور المقالات دي بس (الباقي ما يتغيّر)
+const ONLY = process.env.ONLY ? process.env.ONLY.split(",") : null;
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 const done = { services: [], articles: [], areas: [] };
 async function shot(file, o) {
+  const slug = file.split("/").pop().replace(/^en-/, "").replace(/\.jpg$/, "");
+  if (ONLY && !ONLY.includes(slug)) return;
   fs.mkdirSync(file.slice(0, file.lastIndexOf("/")), { recursive: true });
   await page.setContent(tpl(o), { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);

@@ -10,4 +10,8 @@ export const EN_ARTICLE_SLUGS = [
   "choose-water-pump",
   "dripping-tap-mixer",
   "kuwait-summer-plumbing",
+  "toilet-clogged",
+  "ceiling-water-stain",
+  "wall-hung-toilet",
+  "plumbing-emergency-main-valve",
 ];
