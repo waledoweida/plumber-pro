@@ -33,6 +33,8 @@ const info = (it) => base(1200, 800, `
  <svg viewBox="0 0 400 400" width="150" height="150" style="position:absolute;left:70px;bottom:40px;opacity:.9">${ART[it.art]}</svg>
 </div>`);
 
+// ONLY=slug1,slug2 يولّد صور المقالات دي بس (الباقي ما يتغيّر)
+const ONLY = process.env.ONLY ? process.env.ONLY.split(",") : null;
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
 const page = await browser.newPage();
 async function shot(html, w, h, name) {
@@ -49,6 +51,7 @@ async function shot(html, w, h, name) {
   fs.writeFileSync(`${OUT}/${name}-800.webp`, Buffer.from(out[1], "base64"));
 }
 for (const it of ITEMS) {
+  if (ONLY && !ONLY.includes(it.slug)) continue;
   await shot(cover(it, false), 1200, 675, `${it.slug}-cover`);
   await shot(cover(it, true), 1200, 675, `en-${it.slug}-cover`);
   await shot(info(it), 1200, 800, it.info.file);

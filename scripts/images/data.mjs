@@ -17,4 +17,12 @@ export const ITEMS = [
     info: { file: "dripping-tap-mixer-parts", title: "أشهر أسباب التنقيط", items: ["جلدة أو حلقة مطاطية تعبت", "قلب الخلاط خربان", "أملاح وترسبات داخلية", "ضغط ماي زايد"] } },
   { slug: "kuwait-summer-plumbing", art: "sun", kicker: "السباكة بالصيف", title: "صيف الكويت\nوالماي البارد اللي يطلع حار", en: "Kuwait summer\nand your plumbing", enK: "Seasonal tips",
     info: { file: "kuwait-summer-plumbing-tips", title: "احمِ شبكتك بالصيف", items: ["ظلّل أو اعزل التانكي", "اعزل المواسير المكشوفة", "الماطور بمكان مظلل", "طفّ السخان بعز الصيف"] } },
+  { slug: "toilet-clogged", art: "plunger", kicker: "تسليك المجاري", title: "كرسي الحمام مسدود؟\nسلّكه بأمان", en: "Blocked toilet?\nUnblock it safely", enK: "Drains",
+    info: { file: "toilet-clogged-steps", title: "تسليك الكرسي بـ 4 خطوات", items: ["وقّف الماي ولا تسحب مرة ثانية", "كبّاس الكرسي ومغطّى بالماي", "ماي حار مو مغلي ويّا صابون", "سوستة الكرسي إذا ما نفع"] } },
+  { slug: "ceiling-water-stain", art: "ceiling", kicker: "كشف التسربات", title: "بقعة ماي بالسقف؟\nاعرف من وين", en: "Water stain on\nthe ceiling?", enK: "Leak detection",
+    info: { file: "ceiling-water-stain-sources", title: "متى تزيد البقعة؟", items: ["بعد الدش أو السيفون: الحمام اللي فوق", "وقت تشغيل المكيف: ماي التكثيف", "بعد المطر: عزل السطح", "طول الوقت: ماسورة ماي بالسقف"] } },
+  { slug: "wall-hung-toilet", art: "wallhung", kicker: "تجديد الحمامات", title: "الكرسي المعلّق\nولا الأرضي؟", en: "Wall-hung or\nfloor-standing toilet?", enK: "Bathrooms",
+    info: { file: "wall-hung-toilet-compare", title: "الفرق باختصار", items: ["المعلّق: تنظيف أسهل ومساحة أوسع", "المعلّق: تكلفة أعلى ويحتاج فريم", "الأرضي: أرخص وأسرع تركيب", "الأرضي: صيانة أسهل وكل شي ظاهر", "المعلّق يتأسس ويتختبر قبل التبليط"] } },
+  { slug: "plumbing-emergency-main-valve", art: "valve", kicker: "طوارئ السباكة", title: "وين المحبس الرئيسي؟\nأول 10 دقايق", en: "Plumbing emergency:\nthe first 10 minutes", enK: "Emergencies",
+    info: { file: "plumbing-emergency-main-valve-map", title: "وقت الطوارئ بالترتيب", items: ["سكّر أقرب محبس أو اللي بعد الماطور", "طفّ الماطور والكهربا القريبة", "افتح حنفية تحت يخف الضغط", "صوّر الضرر واتصل بالفني"] } },
 ];
