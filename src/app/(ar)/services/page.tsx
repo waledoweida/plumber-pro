@@ -7,7 +7,8 @@ import { Wrench, Search, Bath, Flame, Droplets, Pipette, ArrowLeft, Phone } from
 
 const icons: Record<string, any> = { Wrench, Search, Bath, Flame, Droplets, Pipette };
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 function parseFeatures(raw: string): string[] {
   try {

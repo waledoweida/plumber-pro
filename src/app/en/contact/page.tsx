@@ -9,7 +9,8 @@ import LeadForm from "@/components/LeadForm";
 import { WaIcon } from "@/components/WhatsAppWidget";
 import { BRAND } from "@/lib/brand";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSettings();

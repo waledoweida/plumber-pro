@@ -5,7 +5,8 @@ import { getArticles, getTexts, getSiteSettings } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
 import PageHero from "@/components/ui/PageHero";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSettings();

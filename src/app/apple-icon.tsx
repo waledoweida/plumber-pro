@@ -1,7 +1,8 @@
 import { customIcon, generatedIcon } from "@/lib/siteIcon";
 
 // أيقونة الشاشة الرئيسية للآيفون (خلفية بيضا لأن iOS ما بيدعمش الشفافية)
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 

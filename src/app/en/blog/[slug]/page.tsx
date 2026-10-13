@@ -10,7 +10,12 @@ import { getEnArticle, getEnArticles } from "@/lib/en-blog";
 import { renderArticle, parseHeadings, readingMinutes, responsive } from "@/lib/markdown";
 import { BRAND } from "@/lib/brand";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم).
+// الصفحات ما بتتبناش وقت البناء؛ كل صفحة بتتولّد أول مرة حد يزورها وبعدين تتخزّن.
+export const revalidate = 3600;
+export function generateStaticParams() {
+  return [];
+}
 
 type Props = { params: Promise<{ slug: string }> };
 

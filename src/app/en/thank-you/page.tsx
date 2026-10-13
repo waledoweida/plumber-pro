@@ -5,7 +5,8 @@ import { getSiteSettings } from "@/lib/content";
 import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = { title: { absolute: `Thank you | ${BRAND.nameEn}` }, robots: { index: false } };
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 export default async function EnThankYou() {
   const site = await getSiteSettings();

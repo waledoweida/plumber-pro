@@ -5,7 +5,8 @@ import { enArticle } from "@/lib/en-articles";
 import { SITE_URL } from "@/lib/brand";
 
 // خريطة موقع ديناميكية: أي مقال/خدمة/منطقة جديدة تظهر لجوجل تلقائيًا
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم)
+export const revalidate = 3600;
 
 const BASE = SITE_URL;
 

@@ -23,22 +23,13 @@ type Props = {
 
 export default function Header({ initialData }: Props) {
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState(initialData);
+  const data = initialData;
   const pathname = usePathname() || "/";
   const en = isEnPath(pathname);
   const T = ui(en ? "en" : "ar");
   const home = en ? "/en" : "/";
   const isActive = (href: string) => (href === home ? pathname === home : pathname.startsWith(href));
   const name = en ? BRAND.nameEn : data.name;
-
-  useEffect(() => {
-    fetch("/api/public/settings")
-      .then((r) => r.json())
-      .then((j) => {
-        if (j?.name) setData((d) => ({ ...d, ...j }));
-      })
-      .catch(() => {});
-  }, []);
 
   // القائمة مفتوحة: نوقف سكرول الصفحة ونسكّرها بزر Esc
   useEffect(() => {

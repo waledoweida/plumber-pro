@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
@@ -8,7 +8,7 @@ import MobileCallBar from "@/components/MobileCallBar";
 import ScrollTop from "@/components/ScrollTop";
 import Tracker from "@/components/Tracker";
 import { getSiteSettings, getTexts, getAreas } from "@/lib/content";
-import { getLocale } from "@/lib/locale";
+import type { Locale } from "@/lib/locale";
 import { SITE_URL, BUSINESS_ID, intlPhone, jsonLd as toJsonLd } from "@/lib/seo";
 
 // subsets = اللي ينحمّل مسبقًا بس (العربي)؛ الحروف اللاتينية تنحمّل وقت الحاجة. 3 أوزان بس عشان سرعة الموبايل
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateRootMetadata(): Promise<Metadata> {
   const site = await getSiteSettings();
   return {
     metadataBase: new URL(SITE_URL),
@@ -62,8 +62,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [site, texts, areas, locale] = await Promise.all([getSiteSettings(), getTexts(), getAreas(), getLocale()]);
+// الهيكل المشترك للـ root layouts: (ar)/layout.tsx للعربي و en/layout.tsx للإنجليزي.
+// اللغة بتيجي من مكان الصفحة نفسه (مش من هيدر الطلب) عشان الصفحات تتخزّن كاش ثابت
+// بدل ما تشتغل Function مع كل زيارة.
+export default async function RootShell({ locale, children }: { locale: Locale; children: React.ReactNode }) {
+  const [site, texts, areas] = await Promise.all([getSiteSettings(), getTexts(), getAreas()]);
   // بيانات الشركة لجوجل (Local Business) — toJsonLd بيمنع كسر وسم <script> لو البيانات فيها "</script>"
   const jsonLd = toJsonLd([
     {
@@ -126,7 +129,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
         <main className="flex-1 w-full overflow-x-hidden">{children}</main>
-        <Footer />
+        <Footer locale={locale} />
         <FloatingButtons />
         <ScrollTop />
         <Tracker />

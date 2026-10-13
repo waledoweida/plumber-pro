@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ["lucide-react"],
+    // صفحة 404 للروابط اللي مش موجودة (لأن فيه root layout للعربي وواحد للإنجليزي)
+    globalNotFound: true,
   },
   // المتصفحات وجوجل بيطلبوا /favicon.ico مباشرة — نوجّههم للأيقونة
   async rewrites() {

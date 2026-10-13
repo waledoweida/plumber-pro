@@ -11,7 +11,12 @@ import { SetWaMessage } from "@/components/WaMessage";
 import { isComboService } from "@/lib/combos";
 import { waForArea, serviceShort } from "@/lib/whatsapp";
 
-export const dynamic = "force-dynamic";
+// كاش ثابت يتجدد كل ساعة (أو فورًا عند أي تعديل من لوحة التحكم).
+// الصفحات ما بتتبناش وقت البناء؛ كل صفحة بتتولّد أول مرة حد يزورها وبعدين تتخزّن.
+export const revalidate = 3600;
+export function generateStaticParams() {
+  return [];
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const area = await getAreaBySlug((await params).slug);

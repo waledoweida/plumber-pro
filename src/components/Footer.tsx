@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { getSiteSettings, getServices, getAreas } from "@/lib/content";
 import { Phone, MessageCircle, Mail, MapPin, Clock, Wrench } from "lucide-react";
-import { getLocale } from "@/lib/locale";
+import type { Locale } from "@/lib/locale";
 import { ui } from "@/lib/i18n";
 import { EN_SERVICES, EN_AREAS } from "@/lib/en";
 import { BRAND } from "@/lib/brand";
 import { waLink } from "@/lib/whatsapp";
 
-export default async function Footer() {
-  const [site, services, areas, locale] = await Promise.all([getSiteSettings(), getServices(), getAreas(), getLocale()]);
+export default async function Footer({ locale }: { locale: Locale }) {
+  const [site, services, areas] = await Promise.all([getSiteSettings(), getServices(), getAreas()]);
   const en = locale === "en";
   const T = ui(locale);
   const name = en ? BRAND.nameEn : site.name;
